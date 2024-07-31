@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.sist.dao.board_mapper">
+ <select id="boardListData" resultType="BoardVO" parameterType="hashmap">
+ SELECT no, subject, name, TO_CHAR(regdate, 'YYYY-MM-DD') as dbday, hit, num 
+ FROM (SELECT no, subject, name, regdate, hit, rownum as num 
+ FROM (SELECT /*+INDEX_DESC(board board_no_pk)*/ no, subject, name, regdate, hit 
+ FROM board))
+ WHERE num BETWEEN #{start} AND #{end}
+ </select>
+ <select id="boardRowCount" resultType="int">
+ SELECT COUNT(*) FROM board
+ </select>
+ <insert id="boardInsert" parameterType="BoardVO">
+ INSERT INTO board VALUES(
+ 	board_noseq.nextval, #{name}, #{subject}, #{content}, #{pwd}, sysdate, 0
+ )
+ </insert>
+<update id="boardHitIncrement" parameterType="int">
+UPDATE board SET hit=hit+1 WHERE no=#{no}
+</update>
+<select id="boardDetailData" resultType="BoardVO" parameterType="int">
+SELECT no, name, subject, content, TO_CHAR(regdate, 'yyyy-MM-dd'), hit 
+FROM board 
+WHERE no=#{no}
+</select>
+<select id="boardGetPwd" resultType="String" parameterType="int">
+SELECT pwd FROM board
+WHERE no=#{no}
+</select>
+<delete id="boardDelete" parameterType="int">
+DELETE FROM board
+WHERE no=#{no}
+</delete>
+ </mapper>

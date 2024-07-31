@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.dao.emp_mapper">
+ <!-- Content Model : (cache-ref | cache | resultMap* |
+  parameterMap* | sql* | insert* | update* | delete* | select*)+ 
+  resultMap : 결과값 읽기	=> 컬럼명 = VO변수명 일치
+  parameterMap : PROCEDURE
+  sql : 공통기반
+  -->
+	<sql id="select_sql">
+		SELECT * FROM emp
+	</sql>
+	<select
+		id="empListData"
+		resultType="EmpVO">
+		<include refid="select_sql" />
+	</select>
+	<select
+		id="empDetailData"
+		resultType="EmpVO"
+		parameterType="int">
+		<include refid="select_sql" />
+		WHERE empno=#{empno}
+	</select>
+</mapper>
