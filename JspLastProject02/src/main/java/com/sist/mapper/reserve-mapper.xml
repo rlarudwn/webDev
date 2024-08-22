@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.reserve-mapper">
+<resultMap type="com.sist.vo.ReserveVO" id="reserveMap">
+<result property="fvo.name" column="name"/>
+<!--
+while(rs.next()){
+ReserveVO vo=new ReserveVO();
+vo.getFvo().setName(rs.getString("name"))
+}
+ -->
+<result property="fvo.poster" column="poster"/>
+<result property="fvo.address" column="address"/>
+<result property="fvo.phone" column="phone"/>
+<result property="fvo.theme" column="theme"/>
+<result property="fvo.score" column="score"/>
+<result property="fvo.content" column="content"/>
+</resultMap>
+<insert id="reserveInsert" parameterType="ReserveVO">
+INSERT INTO project_reserve (rno, id, fno, day, time, inwon) VALUES(pre_rno_seq.nextval, #{id}, #{fno}, #{day}, #{time}, #{inwon})
+</insert>
+<select id="reserveMyPageData" resultMap="reserveMap" parameterType="String">
+SELECT rno, pr.fno, day, pr.time, inwon, isok, pf.name, pf.poster, pf.address, pf.phone,
+TO_CHAR(regdate, 'YYYY-MM-DD') as dbday
+FROM project_reserve pr, project_food_house pf
+WHERE pr.fno=pf.fno
+AND id=#{id}
+</select>
+<select id="reserveAdminPageData" resultMap="reserveMap" >
+SELECT rno, pr.fno, day, pr.time, inwon, isok, pf.name, pf.poster, pf.address, pf.phone,
+TO_CHAR(regdate, 'YYYY-MM-DD') as dbday
+FROM project_reserve pr, project_food_house pf
+WHERE pr.fno=pf.fno
+</select>
+<update id="reserveOk" parameterType="int">
+UPDATE project_reserve SET isok='y' where rno=#{rno}
+</update>
+<delete id="reserveCancel" parameterType="int">
+DELETE FROM project_reserve
+WHERE rno=#{rno}
+</delete>
+<select id="myPageReserveInfoData" resultMap="reserveMap" parameterType="int">
+SELECT rno, day, pr.time, inwon, pf.name, pf.poster, pf.address, phone, theme, score, content, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS) as dbday
+FROM project_reserve pa, prject_food_house pf
+WHERE pr.fno=pf.fno
+AND rno=#{rno}
+</select>
+</mapper>

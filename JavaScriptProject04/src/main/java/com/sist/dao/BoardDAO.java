@@ -84,6 +84,19 @@ public class BoardDAO {
 		session.close();
 		return vo;
 	}
+	public static boolean boardUpdate(BoardVO vo) {
+		boolean bCheck=false;
+		SqlSession session=ssf.openSession();
+		String pwd_temp=session.selectOne("boardGetPwd", vo.getNo());
+		System.out.println(pwd_temp);
+		if(vo.getPwd().equals(pwd_temp)) {
+			bCheck=true;
+			session.update("boardUpdate", vo);
+			session.commit();
+		}
+		session.close();
+		return bCheck;
+	}
 	/*
 	<insert id="boardInsert" parameterType="BoardVO">
  INSERT INTO board VALUES(

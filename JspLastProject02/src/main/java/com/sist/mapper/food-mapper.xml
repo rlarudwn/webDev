@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.food-mapper">
+<select id="foodTopHitData" resultType="FoodVO">
+SELECT fno, name, poster, rownum 
+FROM (SELECT fno, name, poster 
+FROM project_food_house ORDER BY hit DESC)
+WHERE rownum &lt;=12
+</select>
+<select id="foodTopLikeData" resultType="FoodVO">
+SELECT fno, name, poster, rownum 
+FROM (SELECT fno, name, poster 
+FROM project_food_house ORDER BY likecount DESC)
+WHERE rownum &lt;=12
+</select>
+<select id="foodTopJjimData" resultType="FoodVO">
+SELECT fno, name, poster, rownum 
+FROM (SELECT fno, name, poster 
+FROM project_food_house ORDER BY jjimcount DESC)
+WHERE rownum &lt;=12
+</select>
+<select id="foodListCount" resultType="int">
+SELECT COUNT(*) FROM project_food_house
+</select>
+<select id="foodListData" resultType="FoodVO" parameterType="hashmap">
+SELECT fno, name, poster, num
+FROM (SELECT fno, name, poster, rownum as num 
+FROM (SELECT /*+INDEX_ASC(project_food_house fh_fno_pk)*/ fno, name, poster 
+FROM project_food_house))
+WHERE num BETWEEN #{start} AND #{end}
+</select>
+<update id="foodHitIncrement" parameterType="int">
+UPDATE project_food_house SET
+hit=hit+1
+WHERE fno=#{fno}
+</update>
+<select id="foodDetailData" parameterType="int" resultType="FoodVO">
+SELECT fno, name, type, phone, address, score, theme, poster, images, time, parking, content
+FROM project_food_house
+WHERE fno=#{fno}
+</select>
+<select id="foodFindListData" resultType="FoodVO" parameterType="hashmap">
+SELECT fno, name, poster, num
+FROM (SELECT fno, name, poster, rownum as num 
+FROM (SELECT /*+INDEX_ASC(project_food_house fh_fno_pk)*/ fno, name, poster 
+FROM project_food_house WHERE address LIKE '%'||#{ss}||'%'))
+WHERE num BETWEEN #{start} AND #{end}
+</select>
+<select id="foodFindTotalPage" parameterType="String" resultType="int">
+SELECT CEIL(COUNT(*)/20.0) FROM project_food_house WHERE address LIKE '%'||#{ss}||'%'
+</select>
+<select id="foodNearListData" resultType="FoodVO" parameterType="String">
+SELECT fno, name, poster, rownum
+FROM (SELECT fno, name, poster 
+FROM project_food_house WHERE address LIKE '%'||#{ss}||'%' ORDER BY fno ASC)
+WHERE rownum &lt;=6
+</select>
+<select id="foodTypeData" parameterType="String" resultType="FoodVO">
+SELECT fno, name, poster, phone
+FROM project_food_house
+WHERE type LIKE '%'||#{type}||'%'
+ORDER BY fno ASC
+</select>
+<select id="foodReserveDateData" parameterType="int" resultType="String">
+SELECT rdays FROM project_food_house WHERE fno=#{fno}
+</select>
+<select id="foodReserveTimeData" resultType="String" parameterType="int">
+SELECT time FROM reserve_date WHERE dno=#{dno}
+</select>
+<select id="foodTimeSelectData" parameterType="int" resultType="String">
+SELECT time FROM reserve_time WHERE tno=#{tno}
+</select>
+</mapper>
+
+
+
+

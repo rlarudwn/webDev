@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.alljjim-mapper">
+	<resultMap
+		type="com.sist.vo.AllJjimVO"
+		id="jjimMap">
+		<result
+			property="fvo.poster"
+			column="poster" />
+		<result
+			property="fvo.address"
+			column="address" />
+		<result
+			property="fvo.phone"
+			column="phone" />
+		<result
+			property="fvo.theme"
+			column="theme" />
+		<result
+			property="fvo.score"
+			column="score" />
+		<result
+			property="fvo.content"
+			column="content" />
+	</resultMap>
+	<insert
+		id="allJjimInsert"
+		parameterType="hashmap">
+		INSERT INTO all_jjim VALUES((SELECT NVL(max(jno)+1,1) FROM all_jjim), #{cno}, #{type}, #{id}, sysdate)
+	</insert>
+	<select
+		id="allJjimCheck"
+		resultType="int"
+		parameterType="hashmap">
+		SELECT COUNT(*) FROM all_jjim WHERE id=#{id} AND cno=#{cno} AND type=#{type}
+	</select>
+	<update
+		id="allJjimIncrement"
+		parameterType="hashmap">
+		UPDATE project_food_house SET
+		jjimcount = (SELECT COUNT(*) FROM all_jjim WHERE type=#{type} AND cno=#{cno})
+		WHERE fno=#{cno}
+	</update>
+	<select
+		id="jjimMyPageListData"
+		resultMap="jjimMap"
+		parameterType="String">
+		SELECT jno, cno, regdate, name, poster, address, phone
+		FROM all_jjim aj, project_food_house pf
+		WHERE aj.cno=pf.fno
+		AND id=#{id} ORDER BY jno DESC
+	</select>
+</mapper>
