@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.board_mapper">
+<!--
+FBNO
+FBSUBJECT
+CNO
+ID
+NICK
+CONTENT
+FBPHOTO
+FBHIT
+REGDATE
+-->
+<!--게시글 목록-->
+<select id="boardListData" parameterType="hashmap" resultType="BoardVO">
+SELECT fbno, cno, fbhit, fbsubject, nick, content, to_char(regdate, 'YYYY-MM-DD') as dbday, num
+FROM (SELECT fbno, cno, fbhit, fbsubject, nick, content, regdate, rownum as num
+FROM (SELECT fbno, cno, fbhit, fbsubject, nick, content, regdate 
+FROM freeboard WHERE cno LIKE '%'||#{type}||'%'))
+WHERE num BETWEEN #{start} AND #{end}
+</select>
+<!--검색 게시글 목록-->
+<select id="boardFindListData" parameterType="hashmap" resultType="BoardVO">
+SELECT fbno, cno, fbhit, fbsubject, nick, content, to_char(regdate, 'YYYY-MM-DD') as dbday, num
+FROM (SELECT fbno, cno, fbhit, fbsubject, nick, content, regdate, rownum as num
+FROM (SELECT fbno, cno, fbhit, fbsubject, nick, content, regdate 
+FROM freeboard WHERE ${option} LIKE '%'||#{ss}||'%' AND cno LIKE '%'||#{type}||'%' ORDER BY fbno DESC))
+WHERE num BETWEEN #{start} AND #{end}
+</select>
+<!-- 게시글 개수 -->
+<select id="boardTotalCount" parameterType="String" resultType="int">
+SELECT COUNT(*) FROM freeboard WHERE cno LIKE '%'||#{type}||'%'
+</select>
+<!-- 검색 게시글 개수 -->
+<select id="boardFindTotalCount" parameterType="hashmap" resultType="int">
+SELECT COUNT(*) FROM freeboard WHERE ${option} LIKE '%'||#{ss}||'%' AND cno LIKE '%'||#{type}||'%'
+</select>
+<!-- 게시글 작성 -->
+<insert id="boardInsert" parameterType="BoardVO">
+INSERT INTO freeboard VALUES((SELECT NVL(MAX(fbno)+1, 1) FROM freeboard), #{fbsubject}, #{cno}, #{id}, #{nick}, #{content}, #{fbphoto}, 0, sysdate)
+</insert>
+<!-- 게시글 내용 보기 -->
+<select id="boardDetailData" parameterType="int" resultType="BoardVO">
+SELECT fbno, fbsubject, cno, id, nick, content, fbphoto, fbhit, to_char(regdate, 'YYYY-MM-DD HH24:MI:SS') as dbday
+FROM freeboard
+WHERE fbno=#{fbno}
+</select>
+<!-- 조회수 증가 -->
+<update id="boardHitIncrement" parameterType="int">
+UPDATE freeboard SET fbhit=fbhit+1 WHERE fbno=#{fbno}
+</update>
+<!-- 게시글 댓글 개수 -->
+<select id="boardReplyCount" parameterType="int" resultType="int">
+SELECT COUNT(*) FROM freereply WHERE fbno=#{fbno}
+</select>
+<!-- 댓글 작성 -->
+<insert id="replyInsert" parameterType="ReplyVO">
+INSERT INTO freereply VALUES ((SELECT NVL(MAX(frno)+1, 1) FROM freereply), #{fbno}, #{id}, #{content}, sysdate, (SELECT NVL(MAX(frno)+1, 1) FROM freereply), #{depth}, #{nick})
+</insert>
+<!-- 대댓글 작성 -->
+<insert id="reReplyInsert" parameterType="ReplyVO">
+INSERT INTO freereply VALUES ((SELECT NVL(MAX(frno)+1, 1) FROM freereply), #{fbno}, #{id}, #{content}, sysdate, #{root}, #{depth}, #{nick})
+</insert>
+<!-- 댓글 목록 -->
+<select id="replyList" resultType="ReplyVO" parameterType="int">
+SELECT frno, fbno, id, nick, to_char(regdate, 'YYYY-MM-DD HH24:MI:SS') as dbday, root, depth, content
+FROM freereply WHERE fbno=#{fbno} ORDER BY root DESC, depth ASC
+</select>
+<!-- 댓글의 대댓글 여부 -->
+<select id="replyCheck" resultType="int" parameterType="int">
+SELECT COUNT(*) FROM freereply WHERE root=#{root} AND depth=2
+</select>
+<!-- 댓글 개수 -->
+<select id="replyCount" resultType="int" parameterType="int">
+SELECT COUNT(*) FROM freereply WHERE fbno=#{fbno}
+</select>
+<!-- 댓글 삭제 -->
+<delete id="replyDelete" parameterType="int">
+DELETE FROM freereply WHERE frno=#{frno}
+</delete>
+<!-- 게시글 삭제 -->
+<delete id="boardDelete" parameterType="int">
+DELETE FROM freeboard WHERE fbno=#{fbno}
+</delete>
+<!-- 게시글의 댓글 전체 삭제 -->
+<delete id="boardReplyDeleteAll" parameterType="int">
+DELETE FROM freereply WHERE fbno=#{fbno}
+</delete>
+</mapper> 

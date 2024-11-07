@@ -1,0 +1,41 @@
+<!--
+	입력양식	=> 그룹
+	<fieldset>	=> CSS	=> table 대체
+	<label>
+	<legend>
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>관련된 입력 양식을 그룹화</h1>
+	<fieldset>
+		<legend width = "600">개인 정보</legend>
+		<table width = "500">
+			<tr>
+				<th width = "20%"><label for = "name">이름</label></th>
+				<td width = "80%"><input type = "text" id = "name" size = "15"></td>
+			</tr>
+			<tr>
+				<th width = "20%"><label for = "addr">주소</label></th>
+				<td width = "80%"><input type = "text" id = "addr" size = "35"></td>
+			</tr>
+			<tr>
+				<th width = "20%"><label for = "email">이메일</label></th>
+				<td width = "80%"><input type = "text" id = "email" size = "35"></td>
+			</tr>
+			<tr>
+				<th width = "20%"><label for = "content">소개</label></th>
+				<td width = "80%">
+					<textarea rows = "10" cols = "40"></textarea>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<input type = text value = "Hong">
+	<input type = "text" value = "Hong Gil Dong"> 
+</body>
+</html>

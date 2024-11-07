@@ -33,7 +33,8 @@
 	      <li class="list-group-item"><a href="#">댓글관리</a></li>
 	      <li class="list-group-item"><a href="../mypage/mypageJjim.do">찜관리</a></li>
 	      <li class="list-group-item"><a href="#">좋아요관리</a></li>
-	      <li class="list-group-item"><a href="#">장바구니관리</a></li>
+	      <li class="list-group-item"><a href="../mypage/mypageBuy.do">구매관리</a></li>
+	      <li class="list-group-item"><a href="../mypage/mypageCart.do">장바구니관리</a></li>
 	      <li class="list-group-item"><a href="../mypage/mypageReserve.do">예약관리</a></li>
 	    </ul>
 	   </div>

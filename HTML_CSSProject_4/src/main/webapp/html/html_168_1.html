@@ -1,0 +1,60 @@
+<!--
+	단위
+		px / % / em
+	색상 단위
+		background-color:red
+		background-color:rgb(255, 255, 255)
+		background-color:#FFFFFF
+	URL단위
+		background:url('경로명')
+			
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	p:nth-child(1){
+		background-color: red;
+		font-size: 1.0em;
+	}
+	p:nth-child(2){
+		background-color: #FF0000;
+		font-size: 2em;
+	}
+	p:nth-child(3){
+		background-color: rgb(255, 0, 0);
+		font-size: 1.5em; 
+	}
+	p:nth-child(4){
+		font-size: 3.0em;
+		background:url('1.jpg');
+	}
+	div{
+		width: 500px;
+		height: 500px;
+		background:url('1.jpg');
+	}
+	h1{
+		color:rgb(179, 220, 167);
+		padding-left: 150px;
+		padding-top: 250px;
+	}
+	.box1{
+		background-size: cover;
+	}
+	.box2{
+		background-repeat: no-repeat;
+	}
+</style>
+</head>
+<body>
+	<p>물레바퀴를 설치하고 회전하게 만드세요</p>
+	<p>풍차 베어링을 작동시키세요</p>
+	<p>크기가 다른 톱니바퀴를 연결하여 장치의 속도를 바꿀 수 있습니다</p>
+	<p>맷돌을 설치하고 작동시키세요.</p>
+	<div class="box1"><h1>안산암 케이스</h1></div>
+	<div class="box2"><h1>안산암 케이스</h1></div>
+</body>
+</html>

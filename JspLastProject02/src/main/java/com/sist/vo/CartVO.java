@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 
 public class CartVO {
-	private int cno, gno, type, account, price;
+	private int cno, gno, account, price;
 	private String id, isbuy, dbday;
 	private Date regdate;
 	private GoodsVO gvo=new GoodsVO();

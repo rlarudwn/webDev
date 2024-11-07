@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+.table_content {
+	border-collapse: collapse;
+	/*보더 라인 통합*/
+	border-top-width: 2px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: black;
+	border-bottom-color: black;
+}
+
+.table_content th {
+	color: white;
+	background-color: #999;
+}
+
+.table_contemt td {}
+
+.table_content tr,
+.table_content td {
+	margin: 0px;
+	padding: 8px;
+}
+
+.tdleft {
+	text-align: lfet;
+}
+
+.tdcenter {
+	text-align: center;
+}
+
+.tdright {
+	text-align: right;
+}
+
+.table_content .dataTr:hover {
+	cursor: pointer;
+	background-color: #fc68;
+}
+
+.table_content a {
+	color: black;
+	text-decoration: none;
+}
+
+.table_content a:hover {
+	color: pink;
+	text-decoration: underline;
+}
+
+table_content button,
+select,
+input[type="text"] {
+	border-radius: 20px;
+}

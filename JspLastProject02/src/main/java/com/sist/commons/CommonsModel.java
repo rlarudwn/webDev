@@ -10,7 +10,6 @@ import com.sist.vo.NoticeVO;
 public class CommonsModel {
 	public static void footerPrint(HttpServletRequest request) {
 		List<NoticeVO> nList = NoticeDAO.noticeTop5Data();
-
 		request.setAttribute("noticeList", nList);
 	}
 }

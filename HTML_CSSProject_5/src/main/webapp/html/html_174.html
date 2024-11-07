@@ -1,0 +1,54 @@
+<!--
+	사이트 제작
+		글자
+		이미지
+			배경 속성
+			글자 속성
+			생상 / 배경스타일
+				background-color : 배경 색상
+				background-image : 배경 이미지	=> 화면이 이미지보다 큰 경우 반복 수행
+				background-repeat : 반복 이미지(타임즈)
+				background-position : 이미지 출력 위치 설정
+				background-size : 축소 / 확대 이미지 크기 조절	=> cover
+									(width height순)
+		화면 UI
+		메뉴(ul)
+		목록(table)
+		기능	=> JavaScript / Java	=> Oracle에서 데이터를 가져옴
+		
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	div{
+		width: 130px;
+		height: 130px;
+		margin: 10px;
+	}
+	.a{
+		background-color: rgb(200, 180, 167);
+	}
+	.b{
+		background-color: magenta;
+	}
+	.c{
+		background-color: yellow;
+	}
+	.d{
+		background-image:url('1.jpg');
+		background-size: cover;
+		background-color: rgba(255, 255, 255, 0.7);
+	}
+</style>
+</head>
+<body>
+	<h1>background-color속성</h1>
+	<div class="a"></div>
+	<div class="b"></div>
+	<div class="c"></div>
+	<div class="d"></div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.moviereview_mapper">
+  <insert id="reviewInsert" parameterType="hashmap">
+    INSERT INTO totalreview VALUES(
+     (SELECT NVL(MAX(trno)+1,1) FROM totalreview),
+     #{tno},#{trating},#{id},#{nickname},#{tcontent},SYSDATE,#{type}
+    )
+  </insert>
+  <select id="reviewListData" resultType="MreviewVO" parameterType="hashmap">
+    SELECT trno,tno,trating,id,nickname,tcontent,type,TO_CHAR(tdate,'YYYY-MM-DD') as dbday
+    FROM totalreview
+    WHERE tno=#{tno} AND type=#{type}
+    ORDER BY trno DESC
+  </select>
+  <delete id="reviewDelete" parameterType="int">
+   DELETE FROM totalreview
+   WHERE trno=#{trno}
+  </delete>
+  <update id="reviewUpdate" parameterType="hashmap">
+    UPDATE totalreview SET
+    tcontent=#{tcontent}
+    WHERE trno=#{trno}
+  </update>
+  <select id="reviewCount" resultType="int" parameterType="hashmap">
+    SELECT COUNT(*) FROM totalreview
+    WHERE tno=#{tno} AND type=#{type}
+  </select>
+  <select id="reviewAverage" resultType="double" parameterType="hashmap">
+    SELECT avg(trating) FROM totalreview
+    WHERE tno=#{tno} AND type=#{type}
+  </select>
+  
+<select id="CheckedReview" resultType="int" parameterType="hashmap">
+    SELECT COUNT(*)
+    FROM totalreview
+    WHERE id = #{id}
+    AND tno = #{tno}
+   </select>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.mreserve_mapper">
+<select id="movieTitleData" resultType="MovieVO">
+SELECT mno, mtitle, mposter, mgrade, mstate 
+FROM movie WHERE mstate LIKE '1'
+</select>
+<select id="movieTnoData" resultType="int" parameterType="int">
+	SELECT DISTINCT tno FROM movie_schedule WHERE mno=#{mno}
+</select>
+<select id="movieTlocData" resultType="String"  parameterType="list">
+	SELECT DISTINCT tloc FROM theater
+	 WHERE tno IN
+    <foreach item="item" index="index" collection="list" open="(" close=")" separator=",">
+        #{item}
+    </foreach>
+</select>
+<select id="movieTnameData" resultType="String"  parameterType="String">
+	SELECT tname 
+	FROM theater WHERE tloc LIKE '%'||#{tloc}||'%' 
+</select>
+<select id="movieTnoData2" resultType="int" parameterType="hashmap">
+ SELECT tno FROM theater WHERE tloc LIKE '%'||#{tloc}||'%' AND tname LIKE '%'||#{tname}||'%'
+</select>
+<select id="movieTdnoData" resultType="int" parameterType="int">
+ SELECT tdno FROM theater_detail WHERE tno=#{tno} ORDER BY tdno ASC                       
+</select>
+<resultMap type="com.sist.vo.MscheduleVO" id="mscheduleMap">
+ 		 <result property="tdvo.tdno" column="tdno"/>
+ 		 <result property="tvo.tno" column="tno"/>
+ 		 <result property="tdvo.tdname" column="tdname"/>
+ 		 <result property="mvo.mno" column="mno"/>
+</resultMap>
+<select id="mscheduleData" resultType="MscheduleVO" parameterType="hashmap">
+	SELECT msno, movie.mno, theater.tno, theater_detail.tdno, theater_detail.tdname, mstime, TO_CHAR(msdate, 'YYYY-MM-DD') as msday
+	FROM movie_schedule, theater_detail
+	JOIN movie ON movie.mno = movie_schedule.mno
+    JOIN theater ON theater.tno = movie_schedule.tno
+    JOIN theater_detail ON theater_detail.tdno = movie_schedule.tdno
+    WHERE mno=#{mno} AND tdno=#{tdno} AND msday=#{rdate}
+    ORDER BY msno ASC
+</select>
+</mapper>

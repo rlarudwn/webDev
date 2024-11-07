@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.noticeboard-mapper">
+
+<!-- 공지사항 올리기 : admin -->
+<insert id="noticeBoardInsert" parameterType="NoticeBoardVO">
+	<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(no)+1,1) as no FROM noticeboard     
+	</selectKey>
+		INSERT INTO notice_board(no,type,subject,content)
+		VALUES (#{vo},#{type},#{subject},#{content})
+</insert>
+
+<!-- 공지목록 출력 : admin/user -->
+<select id="noticeListData" resultType="NoticeBoardVO" parameterType="hashmap">
+	SELECT no,type,subject,name,TO_CHAR(regdate,'YYYY-MM-DD') as dbday,hit,num 
+	FROM (SELECT no,type,subject,name,regdate,hit,rownum as num 
+		FROM (SELECT no,type,subject,name,regdate,hit 
+			FROM notice_board BETWEEN #{start} AND #{end})) 
+</select>
+
+<!-- 공지 상세 보기:user  -->
+	
+
+<!-- 공지 수정 admin -->
+	
+
+<!--  공지 삭제 admin -->
+	
+</mapper>

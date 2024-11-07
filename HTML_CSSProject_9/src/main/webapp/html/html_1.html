@@ -1,0 +1,184 @@
+<!--
+	CSS
+		텍스트 관련 스타일
+			font-family : 글꼴 변경
+				font-family:글꼴, 글꼴...
+					시스템에 내장, @import('')	=> 외부에서 읽어오는 경우
+			font-size : 글씨 크기 변경
+				=> 단위	=> px, em(배수)
+			font-weight : bold	=> 강조
+			color : 글자색 변경
+				지정된 색깔 : red, yellow
+				rgb : rgb(255, 255, 255)
+				rgba : rgba(255, 255, 255, alpha(투명도 : 0.0 ~ 1.0))
+			text-decoration : none|underline|overline|line-through
+			<a> 변경
+			text-transform : non|uppercase|lowercase
+			white-space : pre-wrap : 줄간격 조절
+			text-align : left|right|center
+		배경 관련 스타일
+			background : 배경이미지 / 배경색
+				background-color
+				background-image:url('경로명')
+					=> 그림이 작은 경우 반복출력됨	=> no-repeat
+				background-size:width, height
+					=> cover : 태그 크기에 맞춤
+		목록
+			list-style-type:none (desc|cycle)	=> ul, ol
+				메뉴 제작
+		가시성
+			display:none(숨김)|block|inline|inline-block
+		여백
+			태그밖
+				margin
+					margin: top right bottom left
+				margin-left
+				margin-right
+				margin-top
+				margin-bottom
+				==============> 태그와 태그 사이 여백, 브라우저와 태그 사이 
+			태그 안
+				padding
+					=> padding: top right bottom left
+				padding-left
+				padding-right
+				padding-top
+				padding-bottom
+				==============> 태그안 문자, 이미지 여백
+			padding, margin 공통
+				margin: 20px 20px 20px 20px = margin: 20px
+				padding: 20px 30px = padding 20px 30px 20px 30px
+				
+		테두리
+			border
+			border-style : 선의 종류
+				border-style:solid|double|dotted|dashed
+			border-width : 두께
+			border-color : 색방
+			border: width style color	=> 순서는 상관 없음
+			border-radius : 꼭지점 곡률
+		위치 이동 속성 : float(left|right)	=> block속성
+			float해제 : clear:both
+		배치
+			static: default	=> 코딩한 순서대로 배치
+			relative : 상대 좌표	=> div로 전체 출력 화면 설정
+			absolute : 절대 좌표	=> 브라우저 좌표
+			fixed : 고정 좌표
+			z-index : 레이어	=> 숫자가 가장 높은 태그가 화면에 출력
+			overflow : hidden|scroll
+		form	=> 전송할 데이터를 모아서 한번에 서버로 전송
+			method : 전송방식
+				GET : URL뒤에 데이터를 첨부해서 전송
+					http~~/폴더명/파일명?변수=값
+					http~~/폴더명/파일명?변수=값&변수=값...
+					화면이동	=> 필요시 데이터 전송
+					a.html	=> b.jsp
+					html	=> <form>, <a>
+								=> GET	=> ?로
+						javascript
+							location.href="이동할파일명?변수=값"
+						java
+							sendRedirct("이동할 파일?변수=값")
+						=> URL뒤에 첨부하기 때문에 데이터 노출이 있음(보안 취약)
+							page, 단순 검색
+						method를 사용하지 않는 경우	=> GET(default)
+				POST : 내부 네트워크를 통해 데이터 전송 : 노출이 없다(보안)
+					=> 전송할 데이터가 많거나 보안유지
+				PUT
+				DELETE
+				===========================================RESTful
+				GET : FIND / POST : INSERT / PUT : UPDATE / DELETE : DELETE
+				
+				table태그
+				
+				form : table
+				h1 : caption
+				p : tr
+				labe : table-cell(td)
+				
+				<table> = display:table
+				<tr> = display:table-row
+				<td> = display:table-cell
+				<th> = display:table-column
+				<caption> = display:table-caption
+					
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	#wrap{
+		border: 5px solid rgb(0, 113, 113);
+		width: 500px;
+		margin-left: 150px;
+		border-radius: 10px;
+	}
+	#joinForm{
+		display: table;
+		margin:10px auto;
+		border-collapse: collapse;
+	}
+	#joinForm h1{
+		display: table-caption;
+		font-size: 15px;
+		padding: 5px;
+		margin-bottom: 10px;
+		width: 450px;
+	}
+	#joinForm h1 span{
+		text-align: center;
+		display: block;
+		color: #fff;
+		background-color: #333;
+		padding: 5px;
+		margin: 0px auto;
+	}
+	#joinForm p{
+		display: table-row;
+		padding: 5px;
+		border-bottom: 1px solid #6b6b6b;
+	}
+	#joinForm label{
+		display: table-cell;
+		padding-left: 10px;
+	}
+	#joinForm #id{
+		width: 100px;
+	}
+	#joinForm #pwd{
+		width: 100px;
+		
+	}
+	#joinForm #name{
+		width: 100px;
+		
+	}
+	#joinForm .cellstyle{
+		display: table-cell;
+		padding-left: 5px;
+	}
+	
+</style>
+</head>
+<body>
+	<div id="wrap">
+		<form id="joinForm">
+			<h1><span>회원가입</span></h1>
+			<p>
+				<label for="id">ID</label>
+				<input type="text" id="id" class="cellStyle">
+			</p>
+			<p>
+				<label for="pwd">PWD</label>
+				<input type="password" id="pwd" class="cellStyle">
+			</p>
+			<p>
+				<label for="name">NAME</label>
+				<input type="text" id="name" class="cellStyle">
+			</p>
+		</form>
+	</div>
+</body>
+</html>

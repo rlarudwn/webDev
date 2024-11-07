@@ -90,16 +90,60 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
+	let sel=0
+	var IMP = window.IMP;
+	IMP.init("imp60688173");
+
+	function requestPay(json, name, price) {
+		IMP.request_pay({
+			pg : "html5_inicis",
+			pay_method : "card",
+			merchant_uid : "ORD20180131-0000011", // 주문번호
+			name : name,
+			amount : price, // 숫자 타입
+			buyer_email : json.email,
+			buyer_name : json.name,
+			buyer_tel : json.tel,
+			buyer_addr : json.address,
+			buyer_postcode : json.post
+		}, function(rsp) { // callback
+			location.href='http://localhost/JspLastProject02/mypage/mypageBuy.do'
+		});
+	}
 	$('#sel').change(function() {
 		let account=$('#sel').val()
 		if(account==='수량선택'){
 			alert('수량을 선택하세요')
+			sel=0
 			return
 		}
 		let price=$('#sel').attr('data-price')
 		let total=Number(price)*Number(account)
 		$('#total').text(total.toLocaleString()+"원")
 		$('#account').val(account)
+		sel=1
+	})
+	$('#buy').click(function() {
+		if(sel===0){
+			alert('수량을 선택하세요')
+			return
+		}
+		let gno=$('#gno').val()
+		let price =$('#price').val()
+		let account=$('#account').val()
+		let name=$('#title').text()
+		$.ajax({
+			type:'post',
+			url:'',
+			data:{
+				'gno':gno,
+				'price':price,
+				'account':account
+			},
+			success:function(result){
+				
+			}
+		})
 	})
 })
 </script>
@@ -107,7 +151,7 @@ $(function() {
 <body>
 	<div class="wrapper row3">
 		<main class="container clear">
-			<h2 class="sectiontitle">상세보기</h2>
+			<h2 class="sectiontitle">${type}</h2>
 			<table class="table">
 				<tr>
 					<td width="30%" align="center" rowspan="9">
@@ -165,11 +209,10 @@ $(function() {
 					<td width="60%" class="inline">
 						<c:if test="${sessionScope.id!=null }">
 							<form action="../goods/cartInsert.do">
-								<input type="hidden" name="gno" value="${detail.no }">
-								<input type="hidden" name="type" value="${type}">
-								<input type="hidden" name="price" value="${detail.price }">
+								<input type="hidden" name="gno" id="gno" value="${detail.no }">
+								<input type="hidden" name="price" id="price" value="${detail.price }">
 								<input type="hidden" name="account" value="" id="account">
-								<input type="button" value="장바구니" id="cart">
+								<input type="submit" value="장바구니" id="cart">
 								<input type="button" value="바로구매" id="buy" onclick="requestPay()">
 							</form>
 						</c:if>

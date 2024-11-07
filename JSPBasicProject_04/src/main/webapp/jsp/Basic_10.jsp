@@ -1,0 +1,61 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="table.css">
+<style type="text/css">
+.table_content {
+	margin: 0px auto;
+	width: 800px;
+}
+
+h3 {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<h3>자바와 HTML을 분리 형식</h3>
+	<table class="table_content">
+		<tr>
+			<td colspan="3">
+				<pre>
+			public class Basic_10_jsp extends HttpJspBase{
+				&lt;%! %&gt;	=> 선언된 내용 클래스 멤버로 사용
+				==========================================
+				public void _jspInit(){}	=> web.xml에 설정시 읽어감
+				public vo                                                                                         id _jspDestroy(){}	=> 화면이동, 새로고침	=> 메모리회수
+				==========================================
+				public void _jspService(){
+					&lt;% %&gt;	=> 영역에 소스
+					&lt;%= %&gt;	=> out.print();
+				}
+			}
+			</pre>
+			</td>
+		</tr>
+		<tr class="text-center">
+			<th width="20%">&lt;%! %&gt;</th>
+			<td width="30%">선언문</td>
+			<td width="50%">멤버변수 / 메소드 제작영역 : JSP => 클래스블럭</td>
+		</tr>
+		<tr>
+			<th width="20%">&lt;% %&gt;</th>
+			<td width="30%">스크립트릿</td>
+			<td width="50%">일반 자바 소스(메소드 호출)</td>
+		</tr>
+		<tr>
+			<th width="20%">&lt;%= %&gt;</th>
+			<td width="30%">표현식</td>
+			<td width="50%">자바의 변수, 메소드 출력</td>
+		</tr>
+		<tr>
+			<th width="20%">&lt;%-- --%&gt;</th>
+			<td width="30%">주석</td>
+			<td width="50%">컴파일 시에 제외되는 영역 => 분석 편리</td>
+		</tr>
+	</table>
+</body>
+</html>

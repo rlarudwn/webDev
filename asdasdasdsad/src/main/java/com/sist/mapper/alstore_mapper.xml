@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.alstore_mapper">
+	<select id="alStoreListData" resultType="com.sist.vo.AlStoreVO"
+		parameterType="hashmap">
+		SELECT ano, aname, aprice, adisprice, aphoto, aartist,
+		num
+		FROM (SELECT ano, aname, aprice, adisprice, aphoto, aartist, rownum
+		AS num
+		FROM (SELECT ano, aname, aprice, adisprice, aphoto, aartist
+		FROM
+		ALBUM_STORE
+		ORDER BY ano ASC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+
+	<select id="alStoreTotalPage" resultType="int"
+		parameterType="hashmap">
+		SELECT CEIL(COUNT(*)/20.0) FROM ALBUM_STORE
+	</select>
+	<select id="alstoreListCount" resultType="int">
+		SELECT COUNT(*) FROM ALBUM_STORE
+	</select>
+	<select id="alStoreDetailData" parameterType="int"
+		resultType="com.sist.vo.AlStoreVO">
+		SELECT
+		ano,arating,aphoto,aname,aartist,aprice,adis,adisprice,aimg,aintro,adetail,TO_CHAR(ardate,'YY-MM-DD')
+		as aldate
+		FROM ALBUM_STORE
+		WHERE ano=#{ano}
+	</select>
+</mapper>

@@ -25,6 +25,10 @@ public class MemberModel {
 		  session.setAttribute("id", vo.getId());
 		  session.setAttribute("name", vo.getName());
 		  session.setAttribute("admin", vo.getAdmin());
+		  session.setAttribute("phone", vo.getPhone());
+		  session.setAttribute("address", vo.getAddr1());
+		  session.setAttribute("post", vo.getPost());
+		  session.setAttribute("email", vo.getEmail());
 	  }
 	  // ajax로 전송 
 	  try

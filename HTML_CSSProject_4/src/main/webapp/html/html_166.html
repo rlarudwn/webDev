@@ -1,0 +1,74 @@
+<!--
+	margin을 이용한 가운데 정렬 : <center>태그	=> 사용하지 않는것을 권장	
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	*{	/* 모든 태그를 적용
+			여백을 사용하지 않음
+			글꼴 통일 등*/
+		padding: 0px;
+		margin: 0px;
+	}
+	img{
+		width: 120px;
+		height: 120px;
+		margin: 0px 3px;
+		border-radius: 60px;
+		background-color: lightgoldenrodyellow;
+	}
+	.container{
+		width: 1200px;
+		height: 500px;
+		/*
+		border: 2px solid black;
+		*/
+		margin: 0px auto;	
+	}
+	.row{
+		width: 1000px;
+		/*
+		border: 2px solid purple;
+		*/
+		margin: 0px auto;
+	}
+	#m1{
+		border: 2px solid rgb(0, 0, 128);
+	}
+	#m2{
+		border: 2px dotted rgb(0, 0, 128);
+	}
+	#m3{
+		border: 2px dashed rgb(0, 0, 128);
+	}
+	#m4{
+		border: 2px double rgb(0, 0, 128);
+	}
+	#m5{
+		border: 2px inset rgb(0, 0, 128);
+	}
+	#m6{
+		border: 2px outset rgb(0, 0, 128);
+	}
+	#m7{
+		border: 2px solid rgb(0, 0, 128);
+	}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+		<img src = "1.jpg" id="m1">
+		<img src = "2.jpg" id="m2">
+		<img src = "3.jpg" id="m3">
+		<img src = "4.jpg" id="m4">
+		<img src = "5.jpg" id="m5">
+		<img src = "6.jpg" id="m6">
+		<img src = "7.jpg" id="m7">
+		</div>
+	</div>
+</body>
+</html>

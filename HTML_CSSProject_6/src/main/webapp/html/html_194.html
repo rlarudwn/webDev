@@ -1,0 +1,50 @@
+<!--
+	194page 위치 속성
+	float	=> 위치 지정(left|right)
+	z-index	=> 레이어(출력 순위)	=> 값이 높을수록 위로 올라온다(CardLayout)
+	clear	=> float속성을 해제
+	position
+		absolute : 절대 좌표	=> 지도
+		relative : 상대 좌표
+		fixed	 : 고정 좌표	=> 메뉴, 퀵메뉴... 이미지
+		static	 : 소스 순서대로 배치
+	위치 지정	=> top right bottom left
+	
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.box{
+		width: 100px;
+		height: 100px;
+		position: absolute;
+	}
+	.box:nth-child(1){
+		background-color: magenta;
+		left: 10px;
+		top: 10px;
+		z-index: 1;
+	}
+	.box:nth-child(2){
+		background-color: cyan;
+		left: 50px;
+		top: 50px;
+		z-index: 3;
+	}
+	.box:nth-child(3){
+		background-color: yellow;
+		left: 90px;
+		top: 90px;
+		z-index: 2;
+	}
+</style>
+</head>
+<body>
+	<div class="box"></div>
+	<div class="box"></div>
+	<div class="box"></div>
+</body>
+</html>

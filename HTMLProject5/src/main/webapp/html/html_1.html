@@ -1,0 +1,117 @@
+<!-- 
+	HTML(브라우저에서 실행되는 언어)	=> ML사용 가능
+		ML	=> MarkUP Language	=> 태그	=> 속성
+			<태그명 속성명 = 값>
+	HTML : 태그와 속성이 정해져 있다	=> 정적 페이지
+		이미 제작된 상태 : 암기	=> 태그명, 속성, 화면에 어떻게 출력할 지
+		태그형식
+			여는 태그 / 닫는 태그
+				<태그> / </태그>	=> <태그>출력할 내용</태그>
+			독립 태그
+				<태그/>	=> 데이터 출력	=> <태그 속성 = "데이터 출력 위치"/>
+					=> / = 생략가능 
+			태그 종류
+				문자 출력
+					<b> : bold
+					<strong> : 강조체
+					<h1> ~ <h6> : 제목 설정	=> 숫자가 커질수록 글자는 작아짐
+					<br> : 한줄문자열	=> 줄바꿈
+					<p> : 두줄, 단락
+				목록 출력
+					<ul> : 순서가 없는 목록
+						<li>	=> 주로 메뉴
+					<ol> : 순서가 있는 목록
+						<li>	=> 주로 메뉴
+					<dl> : 상세 보기
+						<dt>	=> 소제목
+						<dd>	=> 설명
+					<table>
+						<tr>
+							<th>	=> 제목
+							<td>	=> 실제 데이터 값
+					<a> : 앵커 태그	=> 화면 이동
+						<a href = "URL">
+				멀티 미디어
+					속성	=> src = "URL"
+					**<img>	=> gif, jpg, png
+					**<embed>
+					<iframe>	=> React, Vue에서 동영상 출력
+					<video>
+					<audio>
+				사용자 입력창
+					<input>
+						type = "text" : 한줄 입력
+						type = "password" : 비밀번호
+						type = "file" : 파일 선택
+						type = "color" : color select
+						type = "date" : 달력
+						type = "hidden" : 화면에 보이지 않음	=> 데이터를 감추는 경우
+						type = "radio" : 한개만 선택, 그룹설정(name 속성)
+						type = "checkbox" : 여러개 동시에 선택
+						type = "range" : slider	=> 반드시 MIN, MAX
+						type = "number" : spinner	=> min, max	=> 숫자 선택
+						type = "button" : JavaScript 제어
+						type = "submit" : 데이터를 서버로 전송
+							form
+								속성
+									method	=> 전송 방식 지정
+										get	=> URL 뒤에 데이터를 첨부해서 전송
+												노출	=> 보안 취약
+										post	=> 내부 네트워크
+												중요	=> 보안
+									action	=> 전송할 파일 지정
+							http://localhost/HTMLProject5/html/html_1.html
+														========> 앞에 있는 파일이 데이터를 받음
+													?page = 1	=> 값 못받음(띄어쓰기)
+													?page=1	=> 공백이 없어야됨		
+					<select>
+						<option>	=> 데이터 저장
+					<textarea> : 여러줄 입력
+							=> 주의점 : 반드시 <textarea></textarea>	=> 사이에 공백 주면 안됨
+							width	=> cols, height	=> rows
+				기타	=> table 대체
+					<fieldset>	=> 입력창 모아서 처리
+					<label>		=> 입력창 모아서 처리
+					<legend>	border 구분		
+				화면 분할
+					<div>	=> 전체 화면 분할
+					<span>	=> 부분적인 css를 적용
+	MML : 태그와 속성이 사용자 정의	=> 태그와 속성을 직접 제작	=> 확장된 ML
+		문서 저장, 환경 설정	=> server.xml, application.xml
+		서버만	=> myBatis / Spring
+	JDBC : Parsing(데이터를 추출 : HTML / XML / JSON)	=> 크롤링	=> HTML / XML에 있는 데이터 추출
+		=> 오라클(데이터베이스 연결)
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+</style>
+</head>
+<body>
+	<center>
+		<table border = "1" bordercolor = "black" width = "800" height = "600">
+			<tr>
+				<td colspan="2" heisht = "100"><iframe src = "header.html" width = "800"></iframe></td>
+			</tr>
+			<tr>
+				<td colspan="2" heisht = "80"><iframe src = "nav.html" width = "800"></iframe></td>
+			</tr>
+			<tr>
+				<td width = "200" height = "320">
+					<iframe src = "aside.html" width = "200" height="320"></iframe>
+				</td>
+				<td width = "600" height = "320">
+					<iframe src = "section.html" width = "600" height="320"></iframe>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" heisht = "100"><iframe src = "footer.html" width = "800"></iframe></td>
+			</tr>
+			
+		</table>
+	</center>
+</body>
+</html>

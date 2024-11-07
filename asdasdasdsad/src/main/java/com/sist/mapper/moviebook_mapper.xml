@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.moviebook_mapper">
+
+	<resultMap type="com.sist.vo.MovieBookVO" id="moviebookMap">
+ 		 <result property="bvo.bno" column="bno"/>
+ 		 <result property="bvo.btitle" column="btitle"/>
+ 		 <result property="bvo.cover" column="cover"/>
+ 		 <result property="bvo.price" column="price"/>
+ 	</resultMap>
+ 	     <select id="movieBookData"  resultType="MovieBookVO">
+ 	     		SELECT moviebook.mbno, moviebook.mno, movie.mno, moviebook.bno, book.btitle, book.cover, book.sale_price
+ 	     		FROM moviebook, movie, book
+ 	     		WHERE moviebook.mno = movie.mno
+ 	     </select>
+</mapper>

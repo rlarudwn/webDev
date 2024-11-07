@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.like_mapper">
+	<insert id="likeOn" parameterType="hashmap">
+		INSERT INTO totallike
+		values((SELECT NVL(MAX(lno)+1,
+		1) FROM totallike),
+		#{id}, #{tno},
+		#{type})
+	</insert>
+	<insert id="likeOff" parameterType="hashmap">
+		DELETE FROM totallike WHERE
+		tno=#{tno} AND id=#{id} AND
+		type=#{type}
+	</insert>
+	<update id="likeCountIncrement" parameterType="hashmap">
+		UPDATE ${table}
+		SET likecount=likecount+1 WHERE
+		${noName}=#{tno}
+	</update>
+	<update id="likeCountDecrement" parameterType="hashmap">
+		UPDATE ${table}
+		SET likecount=likecount-1 WHERE
+		${noName}=#{tno}
+	</update>
+	<select id="likeCount" parameterType="hashmap" resultType="int">
+		SELECT NVL(likecount, 0) as likecount FROM ${table} WHERE
+		${noName}=#{tno}
+	</select>
+	<select id="likeCheck" resultType="int" parameterType="hashmap">
+		SELECT
+		COUNT(*) FROM totallike WHERE tno=#{tno} AND
+		type=#{type} AND id=#{id}
+	</select>
+	<select id="likeTotalPage" parameterType="String"
+		resultType="int">
+		SELECT CEIL(COUNT(*)/12.0) FROM totallike WHERE type LIKE
+		'%'||#{total}||'%'
+	</select>
+	
+	<resultMap type="com.sist.vo.LikeVO" id="likeMap">
+		<result property="mulikevo.poster" column="poster"/>
+		<result property="mulikevo.title" column="title"/>
+		<result property="mulikevo.ano" column="ano"/>
+		<result property="artlikevo.aname" column="aname"/>
+		<result property="molikevo.mposter" column="mposter"/>
+		<result property="molikevo.mtitle" column="mtitle"/>
+		<result property="molikevo.mgenre" column="mgenre"/>
+		<result property="bolikevo.cover" column="cover"/>
+		<result property="bolikevo.btitle" column="btitle"/>
+		<result property="bolikevo.writer" column="writer"/>
+	</resultMap>
+	<select id="mulikeListData" resultMap="likeMap" parameterType="string">
+		SELECT lno, tno, id, 
+		(SELECT music.poster FROM music WHERE mno = totallike.tno) as poster,
+		(SELECT music.title FROM music WHERE mno = totallike.tno) as title,
+		(SELECT music.ano FROM music WHERE mno = totallike.tno) as ano,
+		(SELECT artist.aname FROM artist
+                WHERE artist.ano = (select music.ano from music where mno=totallike.tno)) as aname
+		FROM totallike
+		WHERE type = 1 AND id=#{id}
+	</select>
+	<select id="molikeListData" resultMap="likeMap" parameterType="string">
+		SELECT lno, tno, id,
+		(SELECT movie.mposter FROM movie WHERE mno = totallike.tno) as mposter,
+		(SELECT movie.mtitle FROM movie WHERE mno = totallike.tno) as mtitle,
+		(SELECT movie.mgenre FROM movie WHERE mno = totallike.tno) as mgenre
+		FROM totallike
+		WHERE type = 4 AND id=#{id}
+	</select>
+ 	<select id="bolikeListData" resultMap="likeMap" parameterType="string">
+ 		SELECT lno, tno, id,
+ 		(SELECT book.cover FROM book WHERE bno = totallike.tno) as cover,
+ 		(SELECT book.btitle FROM book WHERE bno = totallike.tno) as btitle,
+ 		(SELECT book.writer FROM book WHERE bno = totallike.tno) as writer
+ 		FROM totallike
+ 		WHERE type = 5 AND id=#{id}
+ 	</select>
+ 	<select id="allikeListData" resultMap="likeMap" parameterType="string">
+ 		SELECT lno, tno, id,
+ 				(SELECT music.poster FROM music WHERE mno = totallike.tno) as poster,
+		(SELECT music.title FROM music WHERE mno = totallike.tno) as title,
+		(SELECT music.ano FROM music WHERE mno = totallike.tno) as ano,
+		(SELECT artist.aname FROM artist
+                WHERE artist.ano = (select music.ano from music where mno=totallike.tno)) as aname,
+        (SELECT movie.mposter FROM movie WHERE mno = totallike.tno) as mposter,
+		(SELECT movie.mtitle FROM movie WHERE mno = totallike.tno) as mtitle,
+		(SELECT movie.mgenre FROM movie WHERE mno = totallike.tno) as mgenre,
+		(SELECT book.cover FROM book WHERE bno = totallike.tno) as bcover,
+ 		(SELECT book.btitle FROM book WHERE bno = totallike.tno) as btitle,
+ 		(SELECT book.writer FROM book WHERE bno = totallike.tno) as bwriter
+ 		FROM totallike
+        WHERE type in(1,4,5) AND id=#{id}
+ 	</select>
+<!-- 	<delete id="likecancel" parameterType="string">
+		DELETE FROM totallike WHERE
+		tno=#{tno} AND id=#{id} 
+	</delete> -->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

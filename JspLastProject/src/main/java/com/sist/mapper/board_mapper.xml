@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.board_mapper">
+	<insert
+		id="boardInsert"
+		parameterType="BoardVO">
+		<selectKey
+			keyProperty="no"
+			resultType="int"
+			order="BEFORE">
+			SELECT NVL(MAX(no)+1,1) as no FROM project_board
+		</selectKey>
+		INSERT into project_board(no, name, subject, content, pwd)
+		values(#{no}, #{name}, #{subject}, #{content}, #{pwd})
+	</insert>
+	<select id="boardListData" resultType="BoardVO" parameterType="hashmap">
+	SELECT no, subject, name, TO_CHAR(regdate, 'YYYY-MM-DD') as dbday, hit, num
+	FROM (SELECT no, subject, name, regdate, hit, rownum as num 
+	FROM (SELECT /*+INDEX_DESC(project_board pboard_no_pk)*/ no, subject, name, regdate, hit 
+	FROM project_board)) 
+	WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardRowCount" resultType="int">
+SELECT COUNT(*) FROM project_board
+	</select>
+	<update id="boardHitIncrement" parameterType="int">
+	UPDATE project_board SET hit=hit+1 WHERE no=#{no}
+	</update>
+	<select id="boardDetailData" parameterType="int" resultType="BoardVO">
+	SELECT no, name, subject, content, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS') as dbday, hit
+	FROM project_board
+	WHERE no=#{no}
+	</select>
+	<select id="boardGetPwd" parameterType="String" resultType="int">
+	SELECT pwd FROM project_board WHERE no=#{no}
+	</select>
+	<update id="boardUpdate" parameterType="BoardVO">
+	UPDATE project_board SET subject=#{subject}, name=#{name}, contnet=#{content}
+	WHERE no=#{no}
+	</update>
+</mapper>

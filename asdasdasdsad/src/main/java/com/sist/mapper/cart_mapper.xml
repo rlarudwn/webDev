@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.cart_mapper">
+	<resultMap type="com.sist.vo.CartVO" id="cartmap">
+		<result property="bovo.cover" column="cover"/>
+		<result property="bovo.btitle" column="btitle" />
+		<result property="bovo.writer" column="writer"/>
+		<result property="alvo.aphoto" column="aphoto"/>
+		<result property="alvo.aname" column="aname"/>
+		<result property="alvo.aartist" column="aartist"/>
+	</resultMap>
+	<select id="allcartListData" resultMap="cartmap"
+		parameterType="string">
+		select tno, id, price,
+		(select cover from book where bno=tno),
+		(select btitle from book where bno=tno),
+		(select writer from book where bno=tno),
+		(select cover from book where bno=tno),
+		(select btitle from book where bno=tno),
+		(select writer from book where bno=tno)
+		from totalcart
+		where type=1 id=#{id}
+	</select>
+	<select id="bookcartListData" resultMap="cartmap"
+		parameterType="string">
+		select tno, id, price,
+		(select cover from book where bno=tno),
+		(select btitle from book where bno=tno),
+		(select writer from book where bno=tno)
+		from totalcart
+		where type=2 id=#{id}
+	</select>
+	<select id="ascartListData" resultMap="cartmap"
+		parameterType="string">
+		select tno, id, price,
+		(select aphoto from album_store where ano=tno),
+		(select aname from album_store where ano=tno),
+		(select aartist from album_store where ano=tno)
+		from totalcart
+		where type=3 id=#{id}
+	</select>
+
+
+</mapper>

@@ -1,0 +1,46 @@
+<!--
+	위치 속성 공식
+	position: absolute|relative|fixed
+	
+	static : HTML코딩 순서로 배치
+	absolute : 원하는 위치에 태그 배치	=> 브라우저
+				직접 배치(top|right|bottom|left)
+	relative : 이전태그 위치를 참조 배치(위에 있는 태그)
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.content{
+		width: 600px;
+	}
+	#image{
+		position: fixed;
+		top: 10px;
+		right: 1000px;
+		width: 300px;
+		height: 300px;
+	}
+</style>
+</head>
+<body>
+	<img src="1.jpg" id="image">
+	<div class="content">
+		<p>
+껍질 벗긴 원목에 안산암 합금을 사용하여 만들 수 있다.
+
+다양한 부품과 장치의 기반 재료로써 사용되는 만큼 많은 양을 만들게 된다.
+블록으로서는 단순한 장식에 가깝지만 설치된 축과 톱니바퀴, 벨트에 설치하여 꾸밀 수 있으며 아이템이 소비되지 않는다 
+톱니바퀴의 경우 옆면의 축이 케이스 덮개로 덮여 연결이 차단되며 원한다면 렌치를 사용하여 이 덮개를 열 수 있다.
+이렇게 설치된 장식 케이스는 렌치로 웅크린 채 우클릭하여 케이스를 벗길 수 있다.
+
+0.5 버전 패치 이후 이제 일반적인 제작이 아닌,
+안산암 합금을 들고 껍질 벗긴 원목에 우클릭으로 사용하여 제작할 수 있게 되었다.
+이 과정은 기계 손을 통한 행동 모방으로 자동화할 수 있다.
+		</p>
+	</div>
+
+</body>
+</html>

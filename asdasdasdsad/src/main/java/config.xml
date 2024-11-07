@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<properties resource="db.properties">
+	</properties>
+	<typeAliases>
+		<typeAlias type="com.sist.vo.MemberVO" alias="MemberVO" />
+		<typeAlias type="com.sist.vo.MusicVO" alias="MusicVO" />
+		<typeAlias type="com.sist.vo.ArtistVO" alias="ArtistVO" />
+		<typeAlias type="com.sist.vo.AlbumVO" alias="AlbumVO" />
+		<typeAlias type="com.sist.vo.MovieVO" alias="MovieVO" />
+		<typeAlias type="com.sist.vo.BookVO" alias="BookVO" />
+		<typeAlias type="com.sist.vo.NoticeBoardVO" alias="NoticeBoardVO" />
+		<typeAlias type="com.sist.vo.ReplyBoardVO" alias="ReplyBoardVO" />
+		<typeAlias type="com.sist.vo.AlStoreVO" alias="AlStoreVO" />
+		<typeAlias type="com.sist.vo.MreviewVO" alias="MreviewVO"/>
+		<typeAlias type="com.sist.vo.BoardVO" alias="BoardVO"/>
+		<typeAlias type="com.sist.vo.ReplyVO" alias="ReplyVO"/>
+		<typeAlias type="com.sist.vo.MovieBookVO" alias="MovieBookVO"/>
+		<typeAlias type="com.sist.vo.MscheduleVO" alias="MscheduleVO"/>
+		<typeAlias type="com.sist.vo.TheaterVO" alias="TheaterVO"/>
+		<typeAlias type="com.sist.vo.TheaterDetailVO" alias="TheaterDetailVO"/>
+		<typeAlias type="com.sist.vo.PlayListMusicVO" alias="PlayListMusicVO"/>
+		<typeAlias type="com.sist.vo.PlayListVO" alias="PlayListVO"/>
+		<typeAlias type="com.sist.vo.ReviewVO" alias="ReviewVO"/>
+		<typeAlias type="com.sist.vo.CartVO" alias="CartVO"/>
+		<typeAlias type="com.sist.vo.LikeVO" alias="LikeVO"/>
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/sist/mapper/member_mapper.xml" />
+		<mapper resource="com/sist/mapper/music_mapper.xml" />
+		<mapper resource="com/sist/mapper/movie_mapper.xml" />
+		<mapper resource="com/sist/mapper/book_mapper.xml" />
+		<mapper resource="com/sist/mapper/replyboard-mapper.xml" />
+		<mapper resource="com/sist/mapper/noticeboard-mapper.xml"/>
+		<mapper resource="com/sist/mapper/alstore_mapper.xml" />
+		<mapper resource="com/sist/mapper/mreview_mapper.xml"/>
+		<mapper resource="com/sist/mapper/board_mapper.xml"/>
+		<mapper resource="com/sist/mapper/like_mapper.xml"/>
+		<mapper resource="com/sist/mapper/moviebook_mapper.xml"/>
+		<mapper resource="com/sist/mapper/mreserve_mapper.xml"/>
+		<mapper resource="com/sist/mapper/review-mapper.xml"/>
+		<mapper resource="com/sist/mapper/cart_mapper.xml"/>
+		<mapper resource="com/sist/mapper/admin-mapper.xml"/>
+	</mappers>
+</configuration>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.music-mapper">
+	<select
+		id="musicListData"
+		resultType="MusicVO"
+		parameterType="hashmap">
+		SELECT mno, title, alno, ano, poster, genre, altitle, aname, num
+		FROM (SELECT mno, title, alno, ano, poster, genre, altitle, aname, rownum
+		as num
+		FROM (SELECT mno, title, alno, ano, poster, genre ,(SELECT atitle FROM
+		album WHERE album.alno=music.alno) as altitle, (SELECT aname FROM
+		artist where artist.ano=music.ano) as aname
+		FROM music WHERE genre LIKE '%'||#{genre}||'%' ORDER BY playcount DESC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="musicTotalPage" parameterType="String" resultType="int">
+	SELECT CEIL(COUNT(*)/50.0) FROM music WHERE genre LIKE '%'||#{genre}||'%'
+	</select>
+	<select id="albumListData" parameterType="hashmap" resultType="AlbumVO">
+	SELECT alno, ano, atitle, poster, aname, num
+	FROM (SELECT alno, ano, atitle, poster, aname, rownum as num 
+	FROM (SELECT alno, ano, atitle, poster , (SELECT aname from artist where artist.ano=album.ano) as aname
+	FROM album WHERE genre LIKE '%'||#{genre}||'%' ORDER BY alno DESC))
+	WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="albumTotalPage" parameterType="String" resultType="int">
+	SELECT CEIL(COUNT(*)/12.0) FROM music WHERE genre LIKE '%'||#{genre}||'%'
+	</select>
+</mapper>

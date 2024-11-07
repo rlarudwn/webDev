@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.book_mapper">
+<select id="bookListData" resultType="BookVO" parameterType="hashmap">
+    SELECT bno,btag,bgenre,cover,btitle,writer,price,sale_price,dis_rate,publisher,intro,intro_img,pages,isbn13,isbn10,bdate,num
+    FROM (SELECT bno,btag,bgenre,cover,btitle,writer,price,sale_price,dis_rate,publisher,intro,intro_img,pages,isbn13,isbn10,bdate,rownum as num
+    FROM (SELECT bno,btag,bgenre,cover,btitle,writer,price,sale_price,dis_rate,publisher,intro,intro_img,pages,isbn13,isbn10,bdate
+    FROM book WHERE ( btitle LIKE '%'||#{search}||'%' OR
+			                writer LIKE '%'||#{search}||'%' OR
+			                btag LIKE '%'||#{search}||'%' OR
+			                bgenre LIKE '%'||#{search}||'%' OR
+			                publisher LIKE '%'||#{search}||'%') AND
+    bgenre LIKE '%'||#{genre}||'%'
+    ORDER BY bno ASC))
+    WHERE num BETWEEN #{start} AND #{end}
+  </select>
+
+  <select id="bookTotalPage" resultType="int" parameterType="String">
+    SELECT CEIL(COUNT(*)/20.0) FROM book WHERE bgenre LIKE '%'||#{genre}||'%'
+  </select>
+  
+  <select id="bookListCount" resultType="int" parameterType="hashmap">
+		SELECT COUNT(*) FROM book WHERE bgenre LIKE '%'||#{genre}||'%'
+  </select>
+  
+	<select id="bookDetailData" resultType="BookVO" parameterType="int">
+		SELECT bno,btag,bgenre,cover,btitle,writer,price,sale_price,dis_rate,publisher,intro,intro_img,pages,isbn13,isbn10,TO_CHAR(bdate,'YYYY-MM-DD') as dbday
+		FROM book
+		WHERE bno=#{bno}
+	</select>
+	
+	<select id="bookNewData" resultType="BookVO" parameterType="hashmap">
+    SELECT bno,btag,bgenre,cover,btitle,writer,price,sale_price,dis_rate,publisher,intro,intro_img,pages,isbn13,isbn10,TO_CHAR(bdate, 'YYYY-MM-DD') as dbday,num
+    FROM (SELECT bno,btag,bgenre,cover,btitle,writer,price,sale_price,dis_rate,publisher,intro,intro_img,pages,isbn13,isbn10,bdate,TO_CHAR(bdate, 'YYYY-MM-DD') as dbday,rownum as num
+    FROM (SELECT bno,btag,bgenre,cover,btitle,writer,price,sale_price,dis_rate,publisher,intro,intro_img,pages,isbn13,isbn10,bdate
+    FROM book 
+    WHERE bdate IS NOT NULL 
+    AND intro IS NOT NULL
+    AND cover IS NOT NULL
+    AND intro_img IS NOT NULL
+    AND bdate&gt;=SYSDATE-30
+    ORDER BY bdate DESC))
+    WHERE num BETWEEN #{start} AND #{end}
+  </select>
+  
+  <select id="bookNewListCount" resultType="int" parameterType="hashmap">
+    SELECT CEIL(COUNT(*) / 20.0)
+    FROM book
+    WHERE bdate IS NOT NULL 
+    AND intro IS NOT NULL
+    AND cover IS NOT NULL
+    AND intro_img IS NOT NULL
+    AND bdate&gt;=SYSDATE-30
+  </select>
+  
+  <select id="bookFindListData" resultType="BookVO" parameterType="hashmap">
+    SELECT bno,btag,bgenre,cover,btitle,writer,sale_price,dis_rate,publisher,bdate,num
+    FROM (SELECT bno,btag,bgenre,cover,btitle,writer,sale_price,dis_rate,publisher,bdate,rownum as num 
+    FROM (SELECT /*+ INDEX_ASC(book book_bno_pk)*/SELECT bno,btag,bgenre,cover,btitle,writer,sale_price,dis_rate,publisher,bdate
+    FROM book WHERE ( btitle LIKE '%'||#{search}||'%' OR
+			                writer LIKE '%'||#{search}||'%' OR
+			                btag LIKE '%'||#{search}||'%' OR
+			                bgenre LIKE '%'||#{search}||'%' OR
+			                publisher LIKE '%'||#{search}||'%')))
+    WHERE num BETWEEN #{start} AND #{end}
+  </select>
+  
+  <select id="bookFindTotalPage" resultType="int" parameterType="hashmap">
+    SELECT CEIL(COUNT(*) / 20.0) 
+    FROM book
+    WHERE ( btitle LIKE '%'||#{search}||'%' OR
+		        writer LIKE '%'||#{search}||'%' OR
+		        btag LIKE '%'||#{search}||'%' OR
+		        bgenre LIKE '%'||#{search}||'%' OR
+		        publisher LIKE '%'||#{search}||'%')
+		AND bgenre LIKE '%'||#{genre}||'%'    
+</select>
+
+<select id="bookBestData" resultType="BookVO" parameterType="hashmap">
+	  SELECT bno, btag, bgenre, cover, btitle, writer, price, sale_price, dis_rate, publisher, intro, intro_img, pages, isbn13, isbn10, TO_CHAR(bdate, 'YYYY-MM-DD') as dbday, num
+    FROM (SELECT bno, btag, bgenre, cover, btitle, writer, price, sale_price, dis_rate, publisher, intro, intro_img, pages, isbn13, isbn10, bdate, rownum as num
+    FROM (SELECT book.bno, book.btag, book.bgenre, book.cover, book.btitle, book.writer, book.price, book.sale_price, book.dis_rate, book.publisher, book.intro, book.intro_img, book.pages, book.isbn13, book.isbn10, book.bdate
+    FROM book
+    JOIN (SELECT tno, SUM(count) as total_count
+    FROM totalcart
+    GROUP BY tno) bb ON book.bno = bb.tno
+    ORDER BY total_count DESC))
+    WHERE num BETWEEN #{start} AND #{end}
+</select>
+
+	<select id="bookBestListCount" resultType="int" parameterType="hashmap">
+    SELECT CEIL(COUNT(*) / 20.0) 
+    FROM (SELECT book.bno
+    FROM book
+    JOIN (SELECT tno, SUM(count) as total_count
+    FROM totalcart
+    GROUP BY tno) bb ON book.bno = bb.tno)
+</select>
+
+ <insert id="insertCart">
+        INSERT INTO totalcart (cno, tno, price, id, count, buydate, type)
+        VALUES ((SELECT NVL(MAX(cno)+1, 1) FROM totalcart), #{tno}, #{price}, #{id}, #{count}, SYSDATE, #{type})
+ </insert>
+ 
+ <select id="CartRecomm" resultType="BookVO" parameterType="map">
+    SELECT * FROM (SELECT b.*
+    FROM book b
+    JOIN (SELECT DISTINCT tno
+    FROM totalcart 
+    WHERE id = #{id} 
+    AND type = 2) 
+    similar ON b.bno = similar.tno
+    WHERE b.bno NOT IN (SELECT tno FROM totalcart WHERE type=2 AND id=#{id})
+    ORDER BY DBMS_RANDOM.VALUE)
+    WHERE ROWNUM &lt;= 12;
+</select>
+
+<select id="BuyRecomm" resultType="BookVO" parameterType="map">
+    SELECT * FROM (SELECT b.*
+    FROM book b
+    JOIN (SELECT DISTINCT tno
+    FROM totalcart
+    WHERE id != #{id}
+    AND type = 2) 
+    similar ON b.bno = similar.tno
+    WHERE b.bno NOT IN (SELECT tno FROM totalcart WHERE type=2 AND id=#{id})
+    ORDER BY DBMS_RANDOM.VALUE)
+    WHERE ROWNUM &lt;= 12
+</select>
+
+<select id="RandomRecomm" resultType="BookVO" parameterType="map">
+    SELECT * FROM (SELECT *
+    FROM book
+    ORDER BY DBMS_RANDOM.VALUE) 
+    WHERE ROWNUM &lt;= 12
+</select>
+    
+</mapper>

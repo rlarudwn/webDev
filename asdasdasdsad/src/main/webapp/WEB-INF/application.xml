@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+<bean id="main" class="com.sist.model.MainModel"></bean>
+<bean id="member" class="com.sist.model.MemberModel"></bean>
+<bean id="music" class="com.sist.model.MusicModel"></bean>
+<bean id="movie" class="com.sist.model.MovieModel"></bean>
+<bean id="book" class="com.sist.model.BookModel"></bean>
+<bean id="replyboard" class="com.sist.model.ReplyBoardModel"></bean>
+<bean id="alstore" class="com.sist.model.AlStoreModel"></bean>
+<bean id="mypage" class="com.sist.model.MyPageModel"></bean>
+<bean id="board" class="com.sist.model.BoardModel"></bean>
+<bean id="mreview" class="com.sist.model.MreviewModel"></bean>
+<bean id="like" class="com.sist.model.LikeModel"></bean>
+<bean id="admin" class="com.sist.model.AdminModel"/>
+<bean id="replyboard" class="com.sist.model.ReplyBoardModel"/>
+<bean id="noticeboard" class="com.sist.model.NoticeBoardModel"/>
+<bean id="mreserve" class="com.sist.model.MreserveModel"/>
+</beans>

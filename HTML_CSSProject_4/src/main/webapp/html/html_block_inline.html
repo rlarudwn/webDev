@@ -1,0 +1,45 @@
+<!--
+	가시 속성 : 어떻게 보여줄 지
+	display 속성
+		값 설정
+		block : 세로 출력	=> 태그가 한줄 전체를 차지	=> newLine
+		inline : 가로 출력	=> 태그의 크기만큼만 출력	=> newLine 없음
+			=> 태그의 width, height 속성을 적용하지 않았을 때
+		inline-block : 가로 출력	=> 태그의 width, height속성 값만큼 출력
+		none : 화면에 보이지 않게 한다
+		table / table-row / table-col / table-title
+			=> <table>을 사용하지 않고 구현	=> <table>은 가급적 사용하지 않기를 권장
+		block : il, ul, dl, table, h1 ~ h6, br, p, hr
+		inline : input, select, textarea, button, strong, bm, b, font, sub, sup
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>block 속성 태그</h1>
+	<p>Java</p>
+	<h3>Oracle</h3>
+	<hr>
+	<ul>
+		<li>AAA</li>
+		<li>BBB</li>
+		<li>CCC</li>
+	</ul>
+	<ol>
+		<li>AAA</li>
+		<li>BBB</li>
+		<li>CCC</li>
+	</ol>
+	<div style="width: 100px; height: 100px; background-color: black;">123</div>
+	<h1>인라인 속성 태그</h1>
+	<span style="width: 100px; height: 100px; background-color: blue;">Hello</span>
+	<span style="width: 100px; height: 100px; background-color: red;">Hello</span>
+	<span style="width: 100px; height: 100px; background-color: green;">Hello</span>
+	<span style="width: 100px; height: 100px; background-color: yellow;">Hello</span>
+	<input type="text" size="20">
+	<button>클릭</button>
+</body>
+</html>

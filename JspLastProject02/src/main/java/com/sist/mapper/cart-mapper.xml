@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.cart-mapper">
-<insert id="cartInsert">
-INSERT INTO project_cart VALUES(pc_cno_seq.nextval, #{gno}, #{type}, #{id}, #{account}, #{price}, 'n')
+<insert id="cartInsert" parameterType="CartVO">
+INSERT INTO project_cart VALUES(pc_cno_seq.nextval, #{gno}, #{id}, #{account}, #{price}, 'n', sysdate)
 </insert>
 <resultMap type="com.sist.vo.CartVO" id="cartMap">
 <result property="gvo.goods_name" column="goods_name"/>
+<result property="gvo.goods_poster" column="goods_poster"/>
 </resultMap>
-<select id=""></select>
+<select id="cartListData" parameterType="String" resultMap="cartMap">
+SELECT cno, goods_name, goods_poster, goods_price, account, goods_price
+FROM project_cart pc, goods_all ga
+WHERE id=#{id} AND isbuy='n' AND pc.gno=ga.no
+</select>
+<select id="cartGetGnoData" resultType="int" parameterType="hashmap">
+SELECT COUNT(*) FROM project_cart WHERE gno=#{gno} AND id=#{id}
+</select>
+<select id="cartGetCno" resultType="int" parameterType="hashmap">
+SELECT cno FROM project_cart
+WHERE gno=#{gno} AND id=#{id}
+</select>
+<update id="cartGnoUpdate" parameterType="CartVO">
+UPDATE project_cart SET
+account=account+#{account}
+WHERE cno=#{cno}
+</update>
+<select id="buyListData" parameterType="String" resultMap="cartMap">
+SELECT cno, goods_name, goods_poster, goods_price, account, goods_price
+FROM project_cart pc, goods_all ga
+WHERE id=#{id} AND isbuy='y' AND pc.gno=ga.no
+</select>
+<select id="buyTotalPrice" resultType="int" parameterType="String">
+SELECT SUM(price*account) FROM project_cart
+WHERE id=#{id} AND isbuy='y'
+</select>
+<update id="cartBuyUpdate" parameterType="int">
+UPDATE project_cart SET isbuy='y' WHERE cno=#{cno}
+</update>
+<delete id="cartCancel" parameterType="int">
+DELETE FROM project_cart WHERE cno=#{cno}
+</delete>
 </mapper>

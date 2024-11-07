@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.music_mapper">
+	<select id="musicListData" resultType="MusicVO">
+	<![CDATA[
+		SELECT mno, title, singer, album, poster, state, idcrement
+		FROM
+		(SELECT /*+INDEX_ASC(genie_music gm_mno_pk)*/ mno, title, singer, album, poster, state, idcrement,
+		rownum FROM
+		genie_music where rownum<=50)
+	]]>
+	</select>
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.sist.mapper.movie_mapper">
+	<select id="movieTopData" resultType="MovieVO">
+		SELECT mno, mtitle, mposter, mrate, num
+		    FROM (SELECT mno, mtitle, mposter, mrate, rownum as num
+		    FROM (SELECT mno, mtitle, mposter, mrate
+		    FROM movie WHERE mrate IS NOT null ORDER BY mrate DESC))
+		    WHERE rownum&lt;=10
+	</select>
+	<select id="movieListData1" resultType="MovieVO" parameterType="hashmap">
+		SELECT mno, mtitle, mposter, TO_CHAR(mrdate,'YYYY.MM.DD') as mrday, mstate, mgrade, mtype, num
+			FROM(SELECT mno, mtitle, mposter, mrdate, mstate, mgrade, mtype, rownum as num
+			FROM (SELECT mno, mtitle, mposter, mrdate, mstate, mgrade, mtype
+			FROM movie WHERE mtype LIKE '1' ORDER BY mstate ASC, mno DESC))
+			WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="movieListData2" resultType="MovieVO" parameterType="hashmap">
+			SELECT mno, mtitle, mposter, TO_CHAR(mrdate,'YYYY.MM.DD') as mrday, mstate, mgrade, mtype, num
+			FROM(SELECT mno, mtitle, mposter, mrdate, mstate, mgrade, mtype, rownum as num
+			FROM (SELECT mno, mtitle, mposter, mrdate, mstate, mgrade, mtype
+			FROM movie WHERE mtype LIKE '2' ORDER BY mstate ASC, mno DESC))
+			WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="movieTotalPage1" resultType="int">
+	 SELECT CEIL(COUNT(*)/16.0) FROM movie WHERE mtype LIKE '1'
+	</select>
+	<select id="movieTotalPage2" resultType="int">
+	 SELECT CEIL(COUNT(*)/16.0) FROM movie WHERE mtype LIKE '2'
+	</select>
+	 <select id="movieListCount1" resultType="int">
+    SELECT COUNT(*) FROM movie WHERE mtype LIKE '1'
+    </select>
+	 <select id="movieListCount2" resultType="int">
+    SELECT COUNT(*) FROM movie WHERE mtype LIKE '2'
+    </select>
+   <select id="movieFindData1" resultType="MovieVO" parameterType="hashmap">
+   	 SELECT mno, mtitle, mposter, TO_CHAR(mrdate,'YYYY.MM.DD') as mrday, mstate, mgrade, mtype, num
+			FROM(SELECT mno, mtitle, mposter, mrdate, mstate, mgrade, mtype, rownum as num
+			FROM (SELECT mno, mtitle, mposter, mrdate, mstate, mgrade, mtype
+			FROM movie WHERE mtype = 1 AND mtitle LIKE '%'||#{ss}||'%' ORDER BY mstate ASC, mno DESC))
+			WHERE num BETWEEN #{start} AND #{end}
+    </select>
+    <select id="movieFindData2" resultType="MovieVO" parameterType="hashmap">
+   		 SELECT mno, mtitle, mposter, TO_CHAR(mrdate,'YYYY.MM.DD') as mrday, mstate, mgrade, mtype, num
+			FROM(SELECT mno, mtitle, mposter, mrdate, mstate, mgrade, mtype, rownum as num
+			FROM (SELECT mno, mtitle, mposter, mrdate, mstate, mgrade, mtype
+			FROM movie WHERE mtype = 2 AND mtitle LIKE '%'||#{ss}||'%' ORDER BY mstate ASC, mno DESC))
+			WHERE num BETWEEN #{start} AND #{end}
+    </select>
+  <select id="movieFindTotalPage1" resultType="int">
+    SELECT CEIL(COUNT(*)/16.0) FROM movie WHERE mtype LIKE '1' AND mtitle LIKE '%'||#{ss}||'%'
+  </select>
+  <select id="movieFindTotalPage2" resultType="int">
+    SELECT CEIL(COUNT(*)/16.0) FROM movie WHERE mtype LIKE '2' AND mtitle LIKE '%'||#{ss}||'%'
+  </select>
+    <select id="movieDetailData" resultType="MovieVO" parameterType="hashmap">
+     SELECT mno, mtitle, mposter, mcount, mtype, mstate, mgenre, mtime, mdirector, mactor, mgrade, mnation, msynop, TO_CHAR(mrdate,'YYYY.MM.DD') as mrday
+     FROM movie WHERE mno=#{mno}
+     </select>
+</mapper>

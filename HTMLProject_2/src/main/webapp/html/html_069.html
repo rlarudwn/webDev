@@ -1,0 +1,135 @@
+<!--
+	글자 간련 태그
+	
+	1. HTML의 구조
+	<!DOCTYPE html> : HTML.5 문서라는 것을 알려준다
+	<html>
+		<head>
+			한글 변환, 시작과 동시 이동, keyword, 모바일 크기 지정
+			<meta charset = "UTF-8">
+			CSS 적용
+			=> 내부
+				<style>
+					태그명 | 클래스명 | 아이디명{
+						style 적용
+					}
+				</style>
+			=> 외부
+				<link href = "적용할 파일명">
+			JavaScript 적용
+			=> 내부
+				<script>
+					처리
+				</script>
+			=> 외부
+				<script src = "파일명.js"></script>
+			=> 브라우저 이름 부여
+			<title>이름</title>
+			=> 설정파일 등록
+		</head>
+		<body>
+			=> 브라우저에 출력할 태그
+			=> 69page부터 시작
+		</body>
+	</html>
+	2. CSS 적용
+	3. JavaScript 적용
+	
+	HTML의 기본 태그
+		글자 태그
+			h1 ~ h6 : 제목 출력	=> 뒤로 갈수록 작아짐
+			br : \n	=> 다음줄에 출력
+			p : 단락 (br을 두번 사용)
+			hr : 수평선(라인선)
+			======================================
+			small : 글자를 작게
+			address(footer) : 필기체
+			sup / sub : 아래첨자 / 위첨자
+			font / b(볼드체) / en(강조체) / strong
+		목록 태그
+			<ul>	=> 순서가 없이 목룍 출력
+			<ol>	=> 순서가 있는 목록 출력
+			<dl>	=> 상세보기
+		테이블 태그
+			<table>
+		미디어 태그
+			<video> <audio> <embed>
+							=> 파일 관련이 없다
+	입력과 관련된 태그
+		한줄입력
+			일반 <input type = text>
+			비밀번호 <input type = password>
+		버튼
+			일반 버튼 <input type = button>
+			전원 버튼 <input type = submit>
+			초기화 <input type = reset>
+			라디오 <input type = raido>
+			체크박스 <input type = cehckbox>
+			이미지 버튼 <input type = image src = "">
+		달력
+			<input type = date> : IE 는 적용 안됨
+		숫자만 출력
+			<input type = number>	=> spinner
+		파일 업로드(선택)
+			<input type = file>
+		slider
+			<input type = range>
+		기타
+			<input type = email> week...
+		여러줄 입력
+			<textarea>
+		콤보 박스
+			<select>
+	분할 태그
+		화면 분할 : <div>
+		태그에 필요한 부분만 스타일 적용 : <span>
+		<label>, <fieldset>
+ -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>70 page : 글자 관련 태그</title>
+</head>
+
+<body>
+	<h1>Hello HTML!!</h1>
+	<h2>Hello HTML!!</h2>
+	<h3>Hello HTML!!</h3>
+	<h4>Hello HTML!!</h4>
+	<h5>Hello HTML!!</h5>
+	<h6>Hello HTML!!</h6>
+	<hr>
+	안산암 케이스와 나무 반 블록, 축으로 만들 수 있다.
+	<p>
+		동력을 받으면 구조물을 돌리는 역할을 한다. 돌아가는 방향과 속도는 받는 동력에 따라 달라진다.<br>
+	<p>
+		측면에 있는 패널을 마우스 우클릭 버튼을 꾹 눌러 이동 설정을 설정할 수 있다. 설정은 세 가지가 있다.<br>
+	<p>
+		멈췄을 때 항상 구조물을 설치함은 베어링이 작동을 멈췄을 때 항상 구조물이 가능한 가까운 각도를 향해 블록 상태로 설치되도록 한다.<br>
+	<p>
+		멈췄을 때 시작 위치에서만 구조물을 설치함은 해당 설정을 설정한 지점을 시작 위치로 설정하고, 그 외 위치에서는 항시 구조물 상태를 유지시킨다.<br>
+	<p>
+		해당 설정을 설정했던 위치에 가깝게 돌아올 경우 구조물은 블록으로 설치된다.<br>
+	<p>
+		멈춰도 구조물을 설치하지 않음은 어떠한 경우에도 구조물을 절대 블록으로 설치하지 않는다.<br>
+	<p>
+		0.5 버전 패치 이후 제작법이 변경되었다. 이제 돌림판 대신 나무 반 블록을 사용한다.<br>
+		<hr>
+		Hello HTML start1<br>
+		Hello HTML start2<br>
+		Hello HTML start3
+		<hr>
+	<pre>
+안산암 합금, 나무, 돌 그리고 톱니바퀴로 만들 수 있다.
+맷돌 위 구멍에 투입이 가능한 아이템을 넣고 일정 시간동안 동력을 가해주면 아이템을 갈아서 결과물로 가공되는 형태이며 재료든 결과품이든 우클릭을 통해 아이템을 빼낼 수 있다.
+위의 구멍 뿐만이 아니라 퍼널로도 재료를 넣고 결과 아이템을 가져올 수 있다.
+맷돌은 기본적으로 분쇄 휠의 하위 계열 장치로 가공 가능 종류가 훨씬 적다. 대신 분쇄 휠은 크기가 크고 높은 피로도 부하를 차지하는데다 사용하기 위해서는 둘이 서로 맞물린 채 돌려야 해서 공간을 훨씬 많이 차지한다.
+맷돌은 분쇄 휠보다 사용할 수 있는 조합법이 적으며 같은 재료 아이템이어도 효율이 낮지만 일부는 분쇄 휠과 동일하기도 하므로 그러한 경우에는 맷돌로 구성하는 것도 고려해 볼 수 있다.
+0.5 버전 패치 이후 제작법이 변경되었다. 안산암 합금, 나무를 재료로 사용하지 않으며 대신 안산암 케이스가 추가되었다.
+</pre>
+</body>
+
+</html>

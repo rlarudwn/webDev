@@ -1,0 +1,79 @@
+<!--
+	display	=> none block inline inline-block
+		table table-row table-col
+	border
+		border-width border-style border-color
+		border-top-width
+		border-right-width
+		border-bottom-width
+		border-left-width
+		border-collapse
+		
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+		.table_content{
+			margin: 0px auto;
+		}
+	</style>
+	<link rel="stylesheet" href="table.css">
+</head>
+
+<body>
+	<h1>자유 게시판</h1>
+	<table class="table_content" width="800">
+		<tr class="dataTr">
+			<th>번호</th>
+			<th>제목</th>
+			<th>이름</th>
+			<th>작성일</th>
+			<th>조회수</th>
+		</tr>
+		<tr class="dataTr">
+			<td class="tdcenter">1</td>
+			<td><a href="#">CSS로 배우는 테이블 디자인</a></td>
+			<td class="tdcenter">김경주</td class="tdcenter">
+			<td class="tdcenter">2024/07/01</td class="tdcenter">
+			<td class="tdcenter">13</td class="tdcenter">
+		</tr>
+		<tr class="dataTr">
+			<td class="tdcenter">2</td>
+			<td><a href="#">CSS로 배우는 테이블 디자인</td>
+			<td class="tdcenter">김경주</td class="tdcenter">
+			<td class="tdcenter">2024/07/01</td class="tdcenter">
+			<td class="tdcenter">13</td class="tdcenter">
+		</tr>
+		<tr class="dataTr">
+			<td class="tdcenter">3</td>
+			<td><a href="#">CSS로 배우는 테이블 디자인</td>
+			<td class="tdcenter">김경주</td class="tdcenter">
+			<td class="tdcenter">2024/07/01</td class="tdcenter">
+			<td class="tdcenter">13</td class="tdcenter">
+		</tr>
+	</table>
+	<table class="table_content" width = "800">
+		<tr>
+			<td class="tdleft">
+				<select>
+					<option>이름</option>
+					<option>내용</option>
+					<option>제목</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="tdleft"></td>
+			<td class="tdright"></td>
+			<button>이전</button>
+			1 page / 10 page
+			<button>다음</button>
+		</tr>
+	</table>
+</body>
+
+</html>

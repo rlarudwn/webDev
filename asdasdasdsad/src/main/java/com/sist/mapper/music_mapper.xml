@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.music_mapper">
+	<select id="musicListData" resultType="MusicVO" parameterType="hashmap">
+		SELECT mno, title, alno, ano, poster, genre, altitle, urlmp4, aname, num
+		FROM (SELECT mno, title, alno, ano, poster, genre, altitle,urlmp4, aname, rownum as num
+		FROM (SELECT mno, title, alno, ano, poster, genre, urlmp4 ,(SELECT atitle FROM album WHERE album.alno=music.alno) as altitle, (SELECT aname FROM artist where artist.ano=music.ano) as aname
+		FROM music WHERE genre LIKE '%'||#{genre}||'%' ORDER BY playcount DESC)
+		WHERE aname LIKE '%'||#{ss}||'%' OR title LIKE '%'||#{ss}||'%')
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="musicListDataNew" resultType="MusicVO" parameterType="hashmap">
+		SELECT mno, title, alno, ano, poster, genre, altitle, urlmp4, aname, num
+		FROM (SELECT mno, title, alno, ano, poster, genre, altitle, urlmp4, aname, rownum as num
+		FROM (SELECT mno, title, alno, ano, poster, genre, (SELECT atitle FROM album WHERE album.alno=music.alno) as altitle, urlmp4, (SELECT aname FROM artist where artist.ano=music.ano) as aname
+		FROM music WHERE titlecheck=1 ORDER BY mno DESC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="musicTotalPage" parameterType="String" resultType="int">
+		SELECT CEIL(COUNT(*)/50.0) FROM music WHERE genre LIKE '%'||#{genre}||'%'
+	</select>
+	<select id="albumListData" parameterType="hashmap" resultType="AlbumVO">
+		SELECT alno, ano, atitle, poster, aname, num
+		FROM (SELECT alno, ano, atitle, poster, aname, rownum as num
+		FROM (SELECT alno, ano, atitle, poster , (SELECT aname from artist where artist.ano=album.ano) as aname
+		FROM album WHERE genre LIKE '%'||#{genre}||'%' ORDER BY alno DESC)
+		WHERE aname LIKE '%'||#{ss}||'%' OR atitle LIKE '%'||#{ss}||'%')
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="artistListData" resultType="ArtistVO" parameterType="hashmap">
+		SELECT ano, poster, nation, type, aname, num
+		FROM(SELECT
+		ano, poster, nation, type, aname, rownum as num
+		FROM(SELECT ano,
+		poster, nation, type, aname
+		FROM artist WHERE aname LIKE
+		'%'||#{ss}||'%' ORDER BY ano DESC))
+		WHERE num BETWEEN #{start} AND
+		#{end}
+	</select>
+	<select id="albumTotalPage" parameterType="String" resultType="int">
+		SELECT CEIL(COUNT(*)/12.0) FROM music WHERE genre LIKE
+		'%'||#{genre}||'%'
+	</select>
+	<select id="artistDetailData" resultType="ArtistVO" parameterType="int">
+		SELECT * FROM artist WHERE ano=#{ano}
+	</select>
+	<select id="artistMusicData" resultType="MusicVO" parameterType="int">
+		SELECT mno, title, alno, ano, poster, genre, likecount, playcount, altitle, aname, rownum
+		FROM (SELECT mno, title, alno, ano, poster, genre, likecount, playcount, (SELECT atitle FROM album WHERE album.alno=music.alno) as altitle, (SELECT aname FROM artist where artist.ano=music.ano) as aname
+		FROM music WHERE ano=#{ano} ORDER BY playcount desc) WHERE rownum &lt;=10
+	</select>
+	<select id="artistAlbumData" resultType="AlbumVO" parameterType="int">
+		SELECT * FROM album WHERE ano=#{ano} AND rownum &lt;= 4
+	</select>
+	<select id="musicDetailData" parameterType="int" resultType="MusicVO">
+		SELECT mno, title, alno, ano, lylics, poster, genre, style, playtime, lylicist, composer, arranger, price, likecount, playcount, titlecheck, urlmp4, urlmp3,
+		(SELECT atitle FROM album WHERE music.alno=album.alno) as altitle,
+		(SELECT aname FROM artist WHERE music.ano=artist.ano) as aname
+		FROM music WHERE mno=#{mno}
+	</select>
+	<select id="musicAlbumData" parameterType="int" resultType="AlbumVO">
+		SELECT * FROM album WHERE alno=#{alno}
+	</select>
+	<select id="artistNameData" parameterType="int" resultType="String">
+		SELECT aname FROM artist WHERE ano=#{ano}
+	</select>
+	<select id="albumDetailData" parameterType="int" resultType="AlbumVO">
+		SELECT alno, ano, atitle, poster, TO_CHAR(regdate, 'YYYY-MM-DD') as dbday, genre, style, likecount,
+		(SELECT aname FROM artist WHERE artist.ano=album.ano) as aname
+		FROM album
+		WHERE alno=${alno}
+	</select>
+	<select id="albumMusicData" resultType="MusicVO" parameterType="int">
+		SELECT mno, title, ano, genre, playcount, titlecheck, poster, (SELECT aname FROM artist WHERE artist.ano=music.ano) as aname
+		FROM music
+		WHERE alno=#{alno}
+	</select>
+	<select id="musicMvListData" parameterType="hashmap" resultType="MusicVO">
+		SELECT mno, title, alno, ano, likecount, playcount, urlmp4, urlmp3, aname, num
+		FROM (SELECT mno, title, alno, ano, likecount, playcount, urlmp4, urlmp3, aname, rownum as num
+		FROM (SELECT mno, title, alno, ano, likecount, playcount, urlmp4, urlmp3,
+		(SELECT aname FROM artist WHERE music.ano=artist.ano) as aname
+		FROM music
+		WHERE titlecheck=1 ORDER BY MNO DESC)
+		WHERE title LIKE '%'||#{ss}||'%' OR aname LIKE '%'||#{ss}||'%')
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="musicMvTotalPage" parameterType="String" resultType="int">
+		SELECT CEIL(COUNT(*)/20.0) FROM (SELECT titlecheck, title,
+		(SELECT aname FROM artist
+		WHERE artist.ano=music.ano) as aname FROM music)
+		WHERE titlecheck=1 AND (title LIKE '%'||#{ss}||'%' OR aname LIKE '%'||#{ss}||'%')
+	</select>
+
+	<select id="musicFindData" parameterType="hashmap" resultType="MusicVO">
+		SELECT mno, ano, alno, title, altitle, aname, poster, num
+		FROM (SELECT mno, ano, alno, title, altitle, aname, poster, rownum as num
+		FROM (SELECT mno, ano, alno, title, (SELECT atitle FROM album WHERE album.alno=music.alno) as altitle, (SELECT aname FROM artist where artist.ano=music.ano) as aname, poster
+		FROM music ORDER BY mno DESC)
+		WHERE aname LIKE '%'||#{ss}||'%' OR title LIKE '%'||#{ss}||'%')
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="albumFindData" parameterType="hashmap" resultType="AlbumVO">
+		SELECT alno, ano, atitle, poster, TO_CHAR(regdate, 'YYYY-MM-DD') as dbday, aname, num
+		FROM (SELECT alno, ano, atitle, poster, regdate, aname, rownum as num
+		FROM (SELECT alno, ano, atitle, poster, regdate, (SELECT aname FROM artist WHERE artist.ano=album.ano) as aname
+		FROM album ORDER BY alno DESC) WHERE aname LIKE '%'||#{ss}||'%' OR atitle LIKE '%'||#{ss}||'%')
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="artistFindData" parameterType="hashmap" resultType="ArtistVO">
+		SELECT ano, aname, nation, type, poster, num
+		FROM (SELECT ano, aname, nation, type, poster, rownum as num
+		FROM (SELECT ano, aname, nation, type, poster
+		FROM artist WHERE aname LIKE '%'||#{ss}||'%' ORDER BY ano DESC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<!-- 플레이리스트 추가 -->
+	<insert id="playListInsert" parameterType="hashmap">
+		INSERT INTO playlist VALUES((SELECT NVL(max(plno)+1, 1) FROM playlist), #{id}, #{plname}, sysdate)
+	</insert>
+	<!-- 플레이리스트 음악 추가 -->
+	<insert id="playListMusicInsert" parameterType="hashmap">
+		INSERT INTO playlistmusic VALUES((SELECT NVL(max(plmno)+1, 1) FROM playlistmusic), #{mno}, #{plno} , sysdate)
+	</insert>
+	<!-- 플레이리스트 목록 -->
+	<select id="playListListData" resultType="PlayListVO" parameterType="String">
+		SELECT plno, id, plname, to_char(regdate, 'YYYY-MM-DD') as dbday,
+		(SELECT COUNT(*) FROM playListMusic WHERE playlist.plno=playlistmusic.plno) as count
+		FROM playlist
+		WHERE id=#{id}
+		ORDER BY plno DESC
+	</select>
+	<!-- 플레이리스트 음악 중복 확인 -->
+	<select id="playListMusicCheck" resultType="int" parameterType="hashmap">
+		SELECT COUNT(*) FROM playlistmusic WHERE plno=#{plno} AND mno=#{mno}
+	</select>
+	<!-- 플레이리스트 음악 목록 -->
+	<select id="playListMusicList" resultType="MusicVO" parameterType="int">
+		SELECT mno, title, alno, ano, poster, genre, altitle, urlmp3, aname, num
+		FROM (SELECT mno, title, alno, ano, poster, genre, altitle,urlmp3, aname, rownum as num
+		FROM (SELECT mno, title, alno, ano, poster, genre, urlmp3 ,(SELECT atitle FROM album WHERE album.alno=music.alno) as altitle,(SELECT aname FROM artist where artist.ano=music.ano) as aname, (SELECT plmno FROM playlistmusic where music.mno=playlistmusic.mno AND plno=#{plno}) as plmno
+		FROM music  WHERE mno in (SELECT mno FROM playlistmusic WHERE plno=#{plno})
+        order by plmno desc))
+	</select>
+	<!-- 플레이리스트 음악 목록 셔플 -->
+	<select id="playListMusicListRandom" resultType="MusicVO" parameterType="int">
+		SELECT mno, title, alno, ano, poster, genre, altitle, urlmp3, aname, num
+		FROM (SELECT mno, title, alno, ano, poster, genre, altitle,urlmp3, aname, rownum as num
+		FROM (SELECT mno, title, alno, ano, poster, genre, urlmp3 ,
+		(SELECT atitle FROM album WHERE album.alno=music.alno) as altitle,
+		(SELECT aname FROM artist where artist.ano=music.ano) as aname
+		FROM music WHERE mno in (SELECT mno FROM playlistmusic WHERE plno=#{plno})
+		ORDER BY DBMS_RANDOM.RANDOM))
+	</select>
+	<delete id="playListDelete" parameterType="int">
+	DELETE FROM playlist WHERE plno=#{plno}
+	</delete>
+	<delete id="playListMusicDelete" parameterType="int">
+	DELETE FROM playlistmusic WHERE plno=#{plno}
+	</delete>
+</mapper>

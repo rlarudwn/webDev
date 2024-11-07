@@ -1,0 +1,162 @@
+<!--
+	HTML5형식
+		<!DOCTYPE html> : HTML5버전을 사용한다	=> 브라우저에 알려주는 상태
+			=> .dtd	=> 표준화 : w3c(www)	=> 첫번째 줄에 사용
+				MyBatis(XML), Spring	=> XML 자체 업체	=> 반드시 제공
+			태그와 속성에 대한 정보 저장
+				태그 정의
+					<!ELEMENT html(head, body)>
+					<!ELEMENT head(meta*, link*, style*, script*)>
+					default : 반드시 한번만 사용
+					* : 0번 이상
+					? : 0, 1번 이상
+					+ : 1번 이상
+					| : 선택
+				속성 정의
+					<!ATTLIST meta CDATA charset required>
+				Entity : 특수문자(변수)
+					<!ENTITY nbsp ' '>	=> &nbsp
+					<!ENTITY lt '<'>	=> &lt
+			=> DOCTYPE	=> 이클립스 자동완성기
+		<html>
+			<head>
+				<title> : 브라우저 이름 부여
+				<meta> : 한글변환, 화면 이동, 모바일 크기, keyword 등록
+				<link> : CSS파일을 읽기
+				<script> : HTML(정적페이지)	=> 동적으로 변경(이벤트 : 사용자 행위에 대한 처리)
+				<style> : 화면 디자인
+				HTML(태그 + 속성) + CSS(약간의 디자인) + JavaScript(요청 처리)
+					=> 표준화 되어있음						=> 언어(표준화 되어있지 않음)
+															표준화 제작(라이브러리)
+																JQuery, VueJS, ReactJS
+			</head>
+			<body>
+				화면에 출력되는 내용 : <html> <head> <body>를 생략하면	=> 자동 <body> 인식
+			</body>
+		</html>
+		HTML 형식
+			ML(MarkUP Language)	=> 태그 + 속성
+			<태그명 속성 = 값..></태그명>
+				=> XML동일(사용자 정의로만 만들어져 있다)	=> Ajax
+			화면에 출력하는 데이터를 저장하는 위치
+				<태그>출력 내용</태그>
+				<태그 속성 = "출력내용"> 
+			태그 종류
+				<태그></태그>	=> 한쌍
+				<태그/>	=> 독립태그
+				***DOM(Document Object Model)
+					=> 저장시 프리형태로 저장
+					=> HTMl을 많이 사용	=> 속도 저하
+					=> 수정 / 새로고침	=> 메모리를 지우고 다시 저장
+			화면에 출력하는 태그
+				태그명 / 속성 / 어떤 모양으로 출력되는지
+				모든 태그의 공통 속성
+					id
+					class
+					====== > 태그 구분자
+					name
+					====== > 자바와 연동
+					style
+					====== > 자체 태그 모양 변경
+					width / height
+					
+			텍스트 관련 태그(문자)
+				태그명, 속성명은 소문자로 한다(권장)
+				트리형태 = 반드시 들여쓰기
+				종류
+					<h1> ~ <h6> : 제목	=> <b>를 포함	=> block형식(한줄 전체를 가지고 있음)
+					<b> : bold체
+					<i> : italic체
+					<sup> <sub> : 첨자
+					<address> : footer	=> 주소 출력	=> italic
+					<br> : 수평선	=> block 형식
+					<ins> : 밑줄
+					<del> : 취소선
+					<mark> : 형광색 표시
+					<blockquote> : 인용부호
+					<p> : 단락
+					<pre> : 원본 그대로 출력
+			링크 태그 : 화면 이동
+				<a>	=>	<a href = "이동 URL 주소">	=> 가장 많이 사용하는 태그
+			멀티 미디어 태그 : 동영상, 이미지 출력
+				<img>
+					=> src = "URL, 파일명"
+					gif / jpg / png 만 가능
+					width / height : 이미지 크기 조정	=> width를 조정시 height 자동조정
+					title : 풍선 도움말
+				<embed>
+					src = "동영상 파일명, youtube"
+					width / height : 동영상 크기 조정
+				<iframe> : HTML파일안에 다른 HTML 추가, 동영상
+					src = "추가할 파일명, 동영상"
+					width / height : 동영상 크기 조절
+			목록 태그
+				<ul> : 순서가 없는 목록
+					<li> : 데이터 출력
+				<ol> - <li> : 순서가 있는 목록
+				<dl> - <dt> / <dd> : 상세 보기 - 소제목 / 데이터
+				<table> : 목록	=> 여러개 동시 출력		=> 사용하지 않는것을 권장
+					<caption> : 테이블 제목
+					<tr> : 한줄 만들기
+						<tr>속성
+							height : 길이
+							bgcolor : 색상	=> tr:hover
+						<th> : 데이터 제목
+						<td> : 데이터 출력
+							<th> / <td> 속성
+								width / height : 크기
+								align(가로)	=> left / center / right
+								valign(세로)	=> top / middle / bottom
+								rowspan : 세로 병합
+								colspan : 가로 병합
+					속성
+						width / height : 크기
+						border : 테두리
+						bordercolor : 테두리 색상
+						cellspacing : 칸 간격
+						cellpadding : 칸과 문자 간격
+						background : 테이블의 이미지 배경
+			입력 태그
+				input 
+					type =
+						"text" : 한줄 문자열
+						"password" : 비밀번호 입력
+						"file" : 파일 업로드 / 다운로드
+						"number" : 숫자 입력
+						"date" : 날짜  
+						"range" : slider
+						"email" : email주소 입력
+			화면 분할 태그
+			기타 태그 : 입력 태그를 그룹화
+				card(이미지와 제목을 묶어서 통합) / 이미지맵
+				<fieldset> <label> <legend>
+				<figure> <figcaption>	=> 이미지와 데이터를 연결
+				<map>
+				
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+		h1 {
+			background-color: green;
+		}
+
+		span {
+			background-color: beige;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>HELLO HTML</h1>
+	<figure>
+		<img src = "1.jpg">
+		<figcaption>인사이드 아웃2</figcaption>
+	</figure>
+</body>
+
+</html>

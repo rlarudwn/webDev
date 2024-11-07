@@ -1,0 +1,129 @@
+/*
+
+TemplateMo 579 Cyborg Gaming
+
+https://templatemo.com/tm-579-cyborg-gaming
+
+*/
+
+/* 
+---------------------------------------------
+Featured Games Style
+--------------------------------------------- 
+*/
+.featured-games2 {
+  border-radius: 23px;
+  background-color: white;
+  padding: 30px 10px;
+  margin-left: 10px;
+  
+}
+.featured-games2 .item{
+	width: 300px;
+	height: 450px;
+}
+.featured-games2 .item .thumb {
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-games2 .item .thumb .hover-effect {
+  position: absolute;
+  bottom: 210px;
+  left: 95px;
+  text-align: center;
+  opacity: 0.9;
+  visibility: hidden;
+  transition: all .4s ease;
+  box-shadow:none;
+}
+
+.featured-games2 .item .thumb:hover .hover-effect {
+  opacity: 0.9;
+  visibility: visible;
+  bottom: 210px;
+  left: 95px;
+  cursor: pointer;
+}
+
+.featured-games2 .item .thumb .hover-effect h6 a{
+  background-color: rgb(255, 255, 255);
+  display: inline-block;
+  color: rgb(64, 0, 64);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 15px;
+  border-radius: 25px;
+  box-shadow:none;
+}
+
+.featured-games2 .item img {
+  border-radius: 23px;
+  left: 80px;
+}
+
+.featured-games2 .item h4 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-bottom: 0px;
+  display: inline-block;
+}
+
+.featured-games2 .item span {
+  color: #666;
+  display: block;
+  margin-top: 7px;
+  font-weight: 400;
+}
+
+.featured-games2 .item ul {
+  float: right;
+  margin-top: 20px;
+}
+
+.featured-games2 .item ul li {
+  text-align: right;
+  color: #fff;
+  font-size: 14px;
+}
+
+.featured-games2 .item ul li:first-child i {
+  color: yellow;
+}
+
+.featured-games2 .item ul li:last-child i {
+  color: #ec6090;
+}
+
+.featured-games2 .owl-nav .owl-prev{
+	position: absolute;
+  margin: 0 auto;
+  top: 80px;
+  left: -60px;
+  margin-right: 500px;
+  
+}
+
+.featured-games2 .owl-nav .owl-next {
+	position: absolute;
+  margin: 0 auto;
+  top: 80px;
+  right: -50px;
+  margin-left: 500px;
+}
+
+.featured-games2 .owl-nav .owl-prev span,
+.featured-games2 .owl-nav .owl-next span  {
+  font-size: 80px;
+  display: inline-block;
+  color: #666;
+  opacity: 1;
+  transition: all .3s;
+}
+
+.featured-games2 .owl-nav .owl-prev span:hover,
+.featured-games2 .owl-nav .owl-next span:hover {
+  opacity: 1;
+  color: #ec6090;
+}
+
